@@ -37,6 +37,11 @@ server = restify.createServer({
   }
 });
 
+server.use(restify.CORS({
+  origins: ['https://kaleguy.github.io']//,   // defaults to ['*']
+//  credentials: true,                 // defaults to false
+ // headers: ['x-foo']                 // sets expose-headers
+}));
 server.use(restify.bodyParser({ mapParams: false }));
 server.use(restify.queryParser());
 server.use(restify.gzipResponse());
