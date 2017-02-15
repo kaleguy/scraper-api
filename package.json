@@ -2,6 +2,9 @@
   "name": "restify",
   "version": "0.0.0",
   "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
   "dependencies": {
     "bunyan": "1.8.1",
     "request": "^2.79.0",
