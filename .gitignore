@@ -1,5 +1,5 @@
 *.swp
 node_modules/
 .idea/
-.config
+.config.json
 .idea/*
