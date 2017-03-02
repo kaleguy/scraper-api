@@ -1,4 +1,11 @@
 const restify = require('restify');
+const nconf = require('nconf');
+
+nconf.argv()
+  .env()
+  .file({ file: '.config.json' });
+
+const appId = nconf.get('weatherAppId');
 
 module.exports = function (server) {
 
@@ -6,7 +13,7 @@ module.exports = function (server) {
      var city = req.params.city;
 
     const host = 'api.openweathermap.org"; ///data/2.5/weather?q=';
-    const urlSuffix = '&units=imperial&appid=c478bded4945b00879ff8199ec9aed58';
+    const urlSuffix = '&units=imperial&appid=' + appId;
 
     // Creates a JSON client
     const client = restify.createJsonClient({
