@@ -10,7 +10,8 @@
   },
   "devDependencies": {
     "jasmine-node": "1.14.5",
-    "jshint": "2.9.2"
+    "jshint": "2.9.2",
+    "swagger-jsdoc": "^1.9.2"
   },
   "scripts": {
     "start": "node index.js",

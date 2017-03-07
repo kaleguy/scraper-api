@@ -9,6 +9,24 @@ const appId = nconf.get('weatherAppId');
 
 module.exports = function (server) {
 
+
+  /**
+   * @swagger
+   * /weather:
+   *   get:
+   *     description: "Returns current weather in the specified city to the caller"
+   *     operationId: getWeatherByCity
+   *   tags: [main]
+   *   parameters:
+   *     - name: city
+   *       in: query
+   *       description: "The city you want weather for in the form city,state,country"
+   *       required: true
+   *       type: "string"
+   *   responses:
+   *     200:
+   *       description: login
+   */
   server.get('/weather/:city', function (req, res, next) {
      var city = req.params.city;
 
