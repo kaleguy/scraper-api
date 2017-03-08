@@ -2,7 +2,7 @@
 'use strict';
 
 
-var swaggerJSDoc = require('swagger-jsdoc');
+var swaggerJSDoc = require('./lib/swagger-jsdoc');
 var options = {
   swaggerDefinition: {
     info: {
