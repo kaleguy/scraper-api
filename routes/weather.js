@@ -12,17 +12,17 @@ module.exports = function (server) {
 
   /**
    * @swagger
-   * /weather:
+   * /weather/{city}:
    *   get:
    *     description: "Returns current weather in the specified city to the caller"
+   *     summary: "Get Weather by City"
    *     operationId: getWeatherByCity
-   *   tags: [main]
    *   parameters:
    *     - name: city
-   *       in: query
+   *       in: path
    *       description: "The city you want weather for in the form city,state,country"
    *       required: true
-   *       type: "string"
+   *       type: string
    *   responses:
    *     200:
    *       description: login
