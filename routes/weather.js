@@ -25,7 +25,35 @@ module.exports = function (server) {
    *         type: string
    *     responses:
    *       200:
-   *         description: OK
+   *         description: |-
+   *           weather response
+   *         examples:
+   *            application/json: |-
+   *              {
+   *                  "coord": {
+   *                  "lon": -74.01,
+   *                  "lat": 40.71
+   *                 },
+   *                 "weather": [
+   *                   {
+   *                     "id": 800,
+   *                     "main": "Clear",
+   *                     "description": "clear sky",
+   *                     "icon": "01n"
+   *                   }
+   *                 ],
+   *                 "base": "stations",
+   *                 "main": {
+   *                   "temp": 51.49,
+   *                   "pressure": 1014,
+   *                   "humidity": 31,
+   *                   "temp_min": 48.2,
+   *                   "temp_max": 55.4
+   *                 },
+   *                 "id": 5128581,
+   *                 "name": "New York",
+   *                 "cod": 200
+   *              }
    */
   server.get('/weather/:city', function (req, res, next) {
      var city = req.params.city;
