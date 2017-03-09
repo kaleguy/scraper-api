@@ -16,16 +16,16 @@ module.exports = function (server) {
    *   get:
    *     description: "Returns current weather in the specified city to the caller"
    *     summary: "Get Weather by City"
-   *     operationId: getWeatherByCity
-   *   parameters:
-   *     - name: city
-   *       in: path
-   *       description: "The city you want weather for in the form city,state,country"
-   *       required: true
-   *       type: string
-   *   responses:
-   *     200:
-   *       description: login
+   *     tags: [Weather]
+   *     parameters:
+   *       - name: city
+   *         in: path
+   *         description: "The city you want weather for in the form city,state,country"
+   *         required: true
+   *         type: string
+   *     responses:
+   *       200:
+   *         description: OK
    */
   server.get('/weather/:city', function (req, res, next) {
      var city = req.params.city;

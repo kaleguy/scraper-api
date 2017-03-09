@@ -2,7 +2,7 @@
 'use strict';
 
 
-var swaggerJSDoc = require('./lib/swagger-jsdoc');
+var swaggerJSDoc = require('swagger-jsdoc');
 var options = {
   swaggerDefinition: {
     info: {
@@ -14,7 +14,15 @@ var options = {
 };
 var swaggerSpec = swaggerJSDoc(options);
 
-var restify, bunyan, routes, log, server;
+/**
+ *
+ * @swagger
+ * tags:
+ *   -name: Weather
+ *    description: Current Weather and Forcasts
+ */
+
+ var restify, bunyan, routes, log, server;
 
 restify = require('restify');
 bunyan  = require('bunyan');
