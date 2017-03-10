@@ -23,37 +23,50 @@ module.exports = function (server) {
    *         description: "The city you want weather for in the form city,state,country"
    *         required: true
    *         type: string
+   *     produces:
+   *       - application/json
    *     responses:
    *       200:
    *         description: |-
    *           weather response
+   *         schema:
+   *           $ref: "#/definitions/report"
    *         examples:
-   *            application/json: |-
-   *              {
-   *                  "coord": {
-   *                  "lon": -74.01,
-   *                  "lat": 40.71
-   *                 },
-   *                 "weather": [
-   *                   {
-   *                     "id": 800,
-   *                     "main": "Clear",
-   *                     "description": "clear sky",
-   *                     "icon": "01n"
-   *                   }
-   *                 ],
-   *                 "base": "stations",
-   *                 "main": {
-   *                   "temp": 51.49,
-   *                   "pressure": 1014,
-   *                   "humidity": 31,
-   *                   "temp_min": 48.2,
-   *                   "temp_max": 55.4
-   *                 },
-   *                 "id": 5128581,
-   *                 "name": "New York",
-   *                 "cod": 200
-   *              }
+   *            "coord":
+   *                "lon": -74.01
+   *                "lat": 40.71
+   *            "weather":
+   *              - "id": 804
+   *                "main": "Clouds"
+   *                "description": "overcast clouds"
+   *                "icon": "04n"
+   *            "base": "stations"
+   *            "main":
+   *                "temp": 50.68
+   *                "pressure": 1016
+   *                "humidity": 27
+   *                "temp_min": 46.4
+   *                "temp_max": 53.6
+   *            "visibility": 16093
+   *            "wind":
+   *                "speed": 10.29
+   *                "deg": 360
+   *                "gust": 7.2
+   *            "clouds":
+   *                 "all": 90
+   *            "dt": 1489113300
+   *            "sys":
+   *               "type": 1
+   *               "id": 1969
+   *               "message": 0.0289
+   *               "country": "US"
+   *               "sunrise": 1489144512
+   *               "sunset": 1489186665
+   *            "id": 5128581
+   *            "name": "New York"
+   *            "cod": 200
+   *
+   *
    */
   server.get('/weather/:city', function (req, res, next) {
      var city = req.params.city;

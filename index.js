@@ -7,20 +7,60 @@ var options = {
   swaggerDefinition: {
     info: {
       title: 'OpenWeatherMap Proxy', // Title (required)
+      description: 'This is a simple wrapper for the OpenWeatherMap API.',
       version: '1.0.0' // Version (required)
     }
   },
-  apis: ['./routes/weather.js'] // Path to the API docs
+  apis: ['./routes/weather.js','index.js'] // Path to the API docs
 };
 var swaggerSpec = swaggerJSDoc(options);
 
 /**
  *
  * @swagger
- * tags:
- *   -name: Weather
- *    description: Current Weather and Forcasts
+ * definitions:
+ *   report:
+ *     type: object
+ *     required:
+ *       - coord
+ *       - weather
+ *       - base
+ *       - main
+ *       - visibility
+ *       - wind
+ *       - clouds
+ *       - dt
+ *       - sys
+ *       - id
+ *       - name
+ *       - cod
+ *     properties:
+ *       coord:
+ *         type: object
+ *       weather:
+ *         type: array
+ *         items:
+ *           type: string
+ *       base:
+ *         type: string
+ *       main:
+ *         type: object
+ *       visibility:
+ *         type: integer
+ *       wind:
+ *         type: object
+ *       clouds:
+ *         type: object
+ *       dt: integer
+ *       sys:
+ *         type: object
+ *       id: integer
+ *       name: string
+ *       cod: integer
+ *
  */
+
+
 
  var restify, bunyan, routes, log, server;
 
