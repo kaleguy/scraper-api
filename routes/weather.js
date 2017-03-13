@@ -65,6 +65,17 @@ module.exports = function (server) {
    *            "id": 5128581
    *            "name": "New York"
    *            "cod": 200
+   *     x-amples:
+   *     - description: Get Weather
+   *       request:
+   *         params:
+   *          city: NYC
+   *       responses:
+   *          200:
+   *            headers:
+   *               content-type: "application/json; charset=utf-8"
+   *            body:
+   *               name: 'New York'
    *
    *
    */

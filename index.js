@@ -9,7 +9,10 @@ var options = {
       title: 'OpenWeatherMap Proxy', // Title (required)
       description: 'This is a simple wrapper for the OpenWeatherMap API.',
       version: '1.0.0' // Version (required)
-    }
+    },
+    host:'localhost:8888',
+    basePath: '',
+    schemes: ['http']
   },
   apis: ['./routes/weather.js','index.js'] // Path to the API docs
 };
@@ -82,7 +85,7 @@ server = restify.createServer({
     'application/json' : function (req, res, body, cb) {
       res.setHeader('Cache-Control', 'must-revalidate');
 
-      // Does the client *explicitly* accepts application/json?
+      // Does the client *explicitly* accept application/json?
       var sendPlainText = (req.header('Accept').split(/, */).indexOf('application/json') === -1);
 
       // Send as plain text

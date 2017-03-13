@@ -4,10 +4,13 @@
   "main": "index.js",
   "dependencies": {
     "bunyan": "1.8.1",
+    "chai": "^3.5.0",
+    "chai-shallow-deep-equal": "^1.4.4",
     "nconf": "^0.8.4",
     "request": "^2.79.0",
     "restify": "4.0.4",
-    "swagger-jsdoc": "^1.9.2"
+    "swagger-jsdoc": "^1.9.2",
+    "swagger-test": "^0.7.0"
   },
   "devDependencies": {
     "jasmine-node": "1.14.5",
