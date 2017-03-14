@@ -87,7 +87,7 @@ npm test
 ```
 Tests generated from Swagger Docs:
 ```
-npm run api-tests
+npm run test-api
 ```
 
 

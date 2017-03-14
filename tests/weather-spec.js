@@ -15,6 +15,7 @@ describe('OpenWeatherMap API', function(){
     serverOptions.uri += 'nyc';
     preq.get(serverOptions)
       .then(function(res){
+         console.log('Response: ', serverOptions.uri, res.body);
          expect(res.body.name).toBe('New York');
          done();
          server.close();
