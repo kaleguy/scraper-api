@@ -90,7 +90,6 @@ Tests generated from Swagger Docs:
 npm run test-api
 ```
 
-
 ## License
 
 MIT
