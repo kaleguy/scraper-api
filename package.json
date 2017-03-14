@@ -12,9 +12,10 @@
     "swagger-jsdoc": "^1.9.2"
   },
   "devDependencies": {
-    "swagger-test": "^0.7.0",
     "jasmine-node": "1.14.5",
-    "jshint": "2.9.2"
+    "jshint": "2.9.2",
+    "mocha": "^3.2.0",
+    "swagger-test": "^0.7.0"
   },
   "scripts": {
     "start": "node index.js",
