@@ -17,14 +17,60 @@ This project was originally created to be used with
 There is a not a free endpoint on https from OpenWeatherMap and Github pages are served
 via https, so a proxy is necessary.
 
+
 ## Installation
 
 Rename .config.example.json to .config.json, edit with your openWeather API key. Then
 
 ```
 npm install
-npm run start
+npm start
 ```
+
+## Swagger-JSDoc and Swagger-Test
+
+Using the swagger-jsdoc module allows you to document your code inline with Swagger YAML:
+
+```
+  /**
+   * @swagger
+   * /weather/{city}:
+   *   get:
+   *     description: "Returns current weather in the specified city to the caller"
+   *     summary: "Get Weather by City"
+   *     tags: [Weather]
+   *     parameters:
+   *       - name: city
+   *         in: path
+   *         description: "The city you want weather for in the form city,state,country"
+   *         required: true
+   *         type: string
+   *     produces:
+   *       - application/json
+   *     responses:
+   *       200:
+   *         description: |-
+   *           weather response
+   *         schema:
+   *           $ref: "#/definitions/report"
+   *     x-amples:
+   *     - description: Get Weather
+   *       request:
+   *         params:
+   *          city: NYC
+   *       responses:
+   *          200:
+   *            headers:
+   *               content-type: "application/json; charset=utf-8"
+   *            body:
+   *               name: 'New York'
+   *
+   */
+```
+The swagger-jsdoc module converts this into swagger json, which you can then view with the Swagger UI webapp, see next
+section.
+
+The x-amples section in the comments above will be turned into a test by swagger-test, see the testing section below.
 
 ## API Reference
 
