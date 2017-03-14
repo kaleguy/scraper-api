@@ -1,3 +1,5 @@
+[![Dependency Status](https://david-dm.org/kaleguy/simpleweatherproxy.svg)](https://david-dm.org/kaleguy/simpleweatherproxy)
+
 ## Synopsis
 
 A simple wrapper for the [OpenWeatherMap API](https://openweathermap.org/api) using Restify.
@@ -30,7 +32,14 @@ npm run start
 
 ## Tests
 
-Coming soon..
+Linter and basic Jasmine test:
+```
+npm test
+```
+Tests generated from Swagger Docs:
+```
+npm run api-tests
+```
 
 ## License
 

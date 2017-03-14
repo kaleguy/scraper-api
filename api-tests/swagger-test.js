@@ -56,6 +56,7 @@ function tests(){
 }
 
 function checkXamplesFinished(){
+
   const finished = true;
   xamples.forEach(function(xample){
     if (! xample.finished){
