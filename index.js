@@ -1,8 +1,9 @@
 /*jslint node: true, indent: 2 */
 'use strict';
 
-
 var swaggerJSDoc = require('swagger-jsdoc');
+var exports = module.exports = {};
+
 var options = {
   swaggerDefinition: {
     info: {
@@ -14,7 +15,10 @@ var options = {
     basePath: '',
     schemes: ['http']
   },
-  apis: ['./routes/weather.js','index.js'] // Path to the API docs
+  apis: [
+    __dirname + '/routes/weather.js',
+    __dirname + '/index.js'
+  ] // Path to the API docs
 };
 var swaggerSpec = swaggerJSDoc(options);
 
@@ -146,4 +150,8 @@ console.log('Server started.');
 server.listen(process.env.PORT || 8888, function () {
   log.info('%s listening at %s', server.name, server.url);
 });
+
+exports.close = function(){
+  server.close();
+};
 

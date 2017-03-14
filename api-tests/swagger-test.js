@@ -3,15 +3,16 @@
 // mocha defines to avoid JSHint breakage
 /* global describe, it, before, beforeEach, after, afterEach */
 
-var swaggerTest = require('swagger-test');
-var preq = require('preq');
+const server = require('../index.js');
+const swaggerTest = require('swagger-test');
+const preq = require('preq');
 
-var chai = require('chai');
+const chai = require('chai');
 chai.use(require('chai-shallow-deep-equal'));
 
-var assert = chai.assert;
+const assert = chai.assert;
 
-var xamples;
+const xamples;
 
 describe('specification-driven tests setup', function () {
 
@@ -45,9 +46,24 @@ function tests(){
         xample.request.headers =   {'Accept': 'application/json'};
         return preq[xample.request.method](xample.request)
           .then(function (response) {
+              xample.finished = true;
               assert.shallowDeepEqual(response, xample.responses[response.status]);
+              checkXamplesFinished();
           });
       });
     });
   });
+}
+
+function checkXamplesFinished(){
+  const finished = true;
+  xamples.forEach(function(xample){
+    if (! xample.finished){
+      finished = false;
+    }
+  });
+  if (finished){
+    server.close();
+  }
+
 }
