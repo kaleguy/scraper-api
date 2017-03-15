@@ -12,7 +12,7 @@ chai.use(require('chai-shallow-deep-equal'));
 
 const assert = chai.assert;
 
-var xamples;
+let xamples;
 
 describe('specification-driven tests setup', function () {
 
