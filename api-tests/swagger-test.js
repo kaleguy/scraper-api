@@ -46,15 +46,16 @@ function tests(){
         xample.request.headers =   {'Accept': 'application/json'};
         return preq[xample.request.method](xample.request)
           .then(function (response) {
-              xample.finished = true;
-              assert.shallowDeepEqual(response, xample.responses[response.status]);
-              checkXamplesFinished();
+            xample.finished = true;
+            assert.shallowDeepEqual(response, xample.responses[response.status]);
+            checkXamplesFinished();
           });
       });
     });
   });
 }
 
+/* istanbul ignore next */
 function checkXamplesFinished(){
 
   let finished = true;

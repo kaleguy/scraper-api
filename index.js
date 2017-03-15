@@ -92,7 +92,8 @@ server = restify.createServer({
       // Does the client *explicitly* accept application/json?
       var sendPlainText = (req.header('Accept').split(/, */).indexOf('application/json') === -1);
 
-      // Send as plain text
+      // Send as plain text (not used by any route in this project so tell istanbul to ignore)
+      /* istanbul ignore next */
       if (sendPlainText) {
         res.setHeader('Content-Type', 'text/plain; charset=utf-8');
       }
@@ -118,6 +119,7 @@ server.pre(restify.pre.sanitizePath());
 
 /*jslint unparam:true*/
 // Default error handler. Personalize according to your needs.
+/* istanbul ignore next */
 server.on('uncaughtException', function (req, res, route, err) {
   console.log('******* Begin Error *******');
   console.log(route);

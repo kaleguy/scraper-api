@@ -20,28 +20,32 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">76.74% </span>
+        <span class="strong">100% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>33/43</span>
+        <span class='fraction'>43/43</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">60% </span>
+        <span class="strong">90% </span>
         <span class="quiet">Branches</span>
-        <span class='fraction'>6/10</span>
+        <span class='fraction'>9/10</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">80% </span>
+        <span class="strong">100% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>4/5</span>
+        <span class='fraction'>5/5</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">76.74% </span>
+        <span class="strong">100% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>33/43</span>
+        <span class='fraction'>43/43</span>
+      </div>
+      <div class='fl pad1y'>
+        <span class="strong">10 statements, 1 function, 3 branches</span>
+        <span class="quiet">Ignored</span>  &nbsp;&nbsp;&nbsp;&nbsp;
       </div>
     </div>
   </div>
-  <div class='status-line medium'></div>
+  <div class='status-line high'></div>
 <pre><table class="coverage">
 <tr><td class="line-count quiet">1
 2
@@ -200,7 +204,9 @@
 155
 156
 157
-158</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+158
+159
+160</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
@@ -295,12 +301,13 @@
 <span class="cline-any cline-yes">2×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2×</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
 <span class="cline-any cline-yes">2×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2×</span>
@@ -320,17 +327,18 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1×</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -452,8 +460,9 @@ server = restify.createServer({
       var sendPlainText = (req.header('Accept').split(/, */).indexOf('application/json') === -1);
 &nbsp;
       // Send as plain text
-      <span class="missing-if-branch" title="if path not taken" >I</span>if (sendPlainText) {
-<span class="cstat-no" title="statement not covered" >        res.setHeader('Content-Type', 'text/plain; charset=utf-8');</span>
+      /* istanbul ignore next */
+      <span class="skip-if-branch" title="if path not taken" >I</span>if (sendPlainText) {
+<span class="cstat-skip" title="statement not covered" >        res.setHeader('Content-Type', 'text/plain; charset=utf-8');</span>
       }
 &nbsp;
       // Send as JSON
@@ -477,17 +486,18 @@ server.pre(restify.pre.sanitizePath());
 &nbsp;
 /*jslint unparam:true*/
 // Default error handler. Personalize according to your needs.
-server.on('uncaughtException', <span class="fstat-no" title="function not covered" >function (req, res, route, err) {</span>
-<span class="cstat-no" title="statement not covered" >  console.log('******* Begin Error *******');</span>
-<span class="cstat-no" title="statement not covered" >  console.log(route);</span>
-<span class="cstat-no" title="statement not covered" >  console.log('*******');</span>
-<span class="cstat-no" title="statement not covered" >  console.log(err.stack);</span>
-<span class="cstat-no" title="statement not covered" >  console.log('******* End Error *******');</span>
-<span class="cstat-no" title="statement not covered" >  if (!res.headersSent) {</span>
-<span class="cstat-no" title="statement not covered" >    return res.send(500, { ok : false });</span>
+/* istanbul ignore next */
+server.on('uncaughtException', <span class="fstat-skip" title="function not covered" >function (req, res, route, err) {</span>
+<span class="cstat-skip" title="statement not covered" >  console.log('******* Begin Error *******');</span>
+<span class="cstat-skip" title="statement not covered" >  console.log(route);</span>
+<span class="cstat-skip" title="statement not covered" >  console.log('*******');</span>
+<span class="cstat-skip" title="statement not covered" >  console.log(err.stack);</span>
+<span class="cstat-skip" title="statement not covered" >  console.log('******* End Error *******');</span>
+<span class="cstat-skip" title="statement not covered" >  if (!res.headersSent) {</span>
+<span class="cstat-skip" title="statement not covered" >    return res.send(500, { ok : false });</span>
   }
-<span class="cstat-no" title="statement not covered" >  res.write("\n");</span>
-<span class="cstat-no" title="statement not covered" >  res.end();</span>
+<span class="cstat-skip" title="statement not covered" >  res.write("\n");</span>
+<span class="cstat-skip" title="statement not covered" >  res.end();</span>
 });
 /*jslint unparam:false*/
 &nbsp;
@@ -520,7 +530,7 @@ exports.close = function(){
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Wed Mar 15 2017 06:56:02 GMT-0400 (EDT)
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Wed Mar 15 2017 08:42:14 GMT-0400 (EDT)
 </div>
 </div>
 <script src="../prettify.js"></script>
