@@ -23,6 +23,9 @@ module.exports = function (server) {
    *         description: "The city you want weather for in the form city,state,country"
    *         required: true
    *         type: string
+   *         consumes:
+   *           - application/json
+   *           - application/text
    *     produces:
    *       - application/json
    *     responses:
@@ -69,14 +72,23 @@ module.exports = function (server) {
    *     - description: Get Weather
    *       request:
    *         params:
-   *          city: NYC
+   *           city: NYC
    *       responses:
    *          200:
    *            headers:
    *               content-type: "application/json; charset=utf-8"
    *            body:
    *               name: 'New York'
-   *
+   *     - description: Get Weather (Text)
+   *       request:
+   *         headers:
+   *           Accept: 'text/plain'
+   *         params:
+   *          city: NYC
+   *       responses:
+   *          200:
+   *            headers:
+   *               content-type: "text/plain"
    *
    */
   server.get('/weather/:city', function (req, res, next) {

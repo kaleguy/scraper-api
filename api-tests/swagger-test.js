@@ -43,7 +43,9 @@ function tests(){
   describe('specification-driven tests', function() {
     xamples.forEach(function (xample) {
       it(xample.description, function () {
-        xample.request.headers =   {'Accept': 'application/json'};
+        if (! xample.request.headers) {
+          xample.request.headers = {'Accept': 'application/json'};
+        }
         return preq[xample.request.method](xample.request)
           .then(function (response) {
             xample.finished = true;
@@ -55,7 +57,6 @@ function tests(){
   });
 }
 
-/* istanbul ignore next */
 function checkXamplesFinished(){
 
   let finished = true;

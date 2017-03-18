@@ -14,16 +14,21 @@
   "devDependencies": {
     "coveralls": "^2.12.0",
     "istanbul": "^0.4.5",
-    "jasmine-node": "1.14.5",
+    "jasmine-node": "^1.14.5",
     "jshint": "2.9.2",
     "mocha": "^3.2.0",
-    "swagger-test": "^0.7.0"
+    "supertest": "^3.0.0",
+    "swagger-test": "^0.7.0",
+    "tap-spec": "^4.1.1",
+    "tape": "^4.6.3"
   },
   "scripts": {
     "start": "node index.js",
     "test": "node_modules/jshint/bin/jshint routes/ tests/ *.json index.js && node_modules/jasmine-node/bin/jasmine-node --verbose tests/",
     "test-api": "mocha api-tests/swagger-test.js",
+    "test-agent": "tape agent-tests/* | tap-spec",
     "coverage": "istanbul cover _mocha api-tests --recursive -- -u      exports -R spec && open coverage/lcov-report/index.html",
+    "coveragej": "istanbul cover jasmine-node tests",
     "report-coverage": "cat ./coverage/lcov.info | coveralls"
   }
 }

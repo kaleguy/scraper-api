@@ -68,7 +68,6 @@ var swaggerSpec = swaggerJSDoc(options);
  */
 
 
-
  var restify, bunyan, routes, log, server;
 
 restify = require('restify');
@@ -89,18 +88,23 @@ server = restify.createServer({
     'application/json' : function (req, res, body, cb) {
       res.setHeader('Cache-Control', 'must-revalidate');
 
-      // Does the client *explicitly* accept application/json?
-      var sendPlainText = (req.header('Accept').split(/, */).indexOf('application/json') === -1);
+/*
+     // Does the client *explicitly* accept application/json?
+      var sendPlainText = '';
+      if (req.header('Accept')){
+        sendPlainText = req.header('Accept').split(/, *!/).indexOf('application/json') === -1;
+      }
 
-      // Send as plain text (not used by any route in this project)
-      // if (sendPlainText) {
-      //  res.setHeader('Content-Type', 'text/plain; charset=utf-8');
-      //}
-
+      if (sendPlainText) {
+        res.setHeader('Content-Type', 'text/plain; charset=utf-8');
+      }
       // Send as JSON
       if (!sendPlainText) {
         res.setHeader('Content-Type', 'application/json; charset=utf-8');
       }
+*/
+
+      res.setHeader('Content-Type', 'application/json; charset=utf-8');
       return cb(null, JSON.stringify(body));
     }
   }
@@ -152,7 +156,8 @@ server.listen(process.env.PORT || 8888, function () {
   log.info('%s listening at %s', server.name, server.url);
 });
 
-exports.close = function(){
-  server.close();
-};
+var app = server;
+module.exports = app;
+exports.close = server.close;
+
 
