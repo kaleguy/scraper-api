@@ -92,11 +92,10 @@ server = restify.createServer({
       // Does the client *explicitly* accept application/json?
       var sendPlainText = (req.header('Accept').split(/, */).indexOf('application/json') === -1);
 
-      // Send as plain text (not used by any route in this project so tell istanbul to ignore)
-      /* istanbul ignore next */
-      if (sendPlainText) {
-        res.setHeader('Content-Type', 'text/plain; charset=utf-8');
-      }
+      // Send as plain text (not used by any route in this project)
+      // if (sendPlainText) {
+      //  res.setHeader('Content-Type', 'text/plain; charset=utf-8');
+      //}
 
       // Send as JSON
       if (!sendPlainText) {
