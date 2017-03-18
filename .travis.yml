@@ -14,6 +14,10 @@ script:
   - npm test
   - npm run test-api
 
+after_success:
+  - npm run coverage
+  - npm run report-coverage
+
 notifications:
   email:
     on_failure: change
