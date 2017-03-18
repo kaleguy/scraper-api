@@ -1,5 +1,6 @@
 [![Build Status](https://travis-ci.org/kaleguy/simpleweatherproxy.svg?branch=master)](https://travis-ci.org/kaleguy/simpleweatherproxy)
 [![Dependency Status](https://david-dm.org/kaleguy/simpleweatherproxy.svg)](https://david-dm.org/kaleguy/simpleweatherproxy)
+[![Coverage Status](https://coveralls.io/repos/github/kaleguy/simpleweatherproxy/badge.svg?branch=master)](https://coveralls.io/github/kaleguy/simpleweatherproxy?branch=master)
 
 ## Synopsis
 
@@ -82,13 +83,28 @@ Check out the source for more info.
 
 ## Tests
 
-Linter and basic Jasmine test:
+Tests generated from Swagger Docs (also runs linter):
+```
+npm run test-api
+```
+
+There are also a couple more test suites for reference.
+Jasmine tests:
+
 ```
 npm test
 ```
-Tests generated from Swagger Docs:
+
+Tape/Supertest tests:
 ```
-npm run test-api
+npm run test-agent
+```
+
+## Coverage
+
+Create coverage report with Istanbul, send to Coveralls to keep a record.
+```
+npm run coverage
 ```
 
 ## License
