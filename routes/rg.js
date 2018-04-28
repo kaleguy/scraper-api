@@ -66,16 +66,15 @@ module.exports = function (server) {
     const client = restify.createClient({
       url: 'https://' + host
     });
-    console.log('=============url: ', '/publication/' + id)
+    console.log('=============url: ', url + '/publication/' + id)
     client.get('/publication/' + id, function (err, req) {
 
-      if (err) {
-        console.log('Error', err)
-      }
+      if (err) { console.log('Error', err) }
 
       assert.ifError(err) // connection error
 
       req.on('result', function (err, response) {
+        consoel.log('=========================xxxxxxxx===========')
         assert.ifError(err) // HTTP status code >= 400
 
         response.body = ''
