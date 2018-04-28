@@ -20,7 +20,7 @@ test('weather route', function(t) {
 // headers set to text
 test('weather route text response', function(t) {
   request(server)
-    .get('/weather/nyc')
+    .get('/weather/new york')
     .set('Accept', 'text/plain')
     .expect(200)
     .expect('Content-Type', /text\/plain/)

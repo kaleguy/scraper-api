@@ -56,8 +56,8 @@ module.exports = function (server) {
    *         headers:
    *           content-type: "text/plain"
    */
-  server.get('/rg/article/:id', function (req, res, next) {
-    var id = req.params.id
+  server.get('/rg/article/:title', function (req, res, next) {
+    var id = req.params.title
     // id = '304662727_Ideological_Reactivity_Political_Conservatism_and_Brain_Responsivity_to_Emotional_and_Neutral_Stimuli'
 
     const host = 'www.researchgate.net'
