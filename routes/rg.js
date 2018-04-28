@@ -73,7 +73,7 @@ module.exports = function (server) {
       assert.ifError(err) // connection error
 
       req.on('result', function (err, response) {
-        consoel.log('=========================xxxxxxxx===========')
+        console.log('=========================xxxxxxxx===========')
         assert.ifError(err) // HTTP status code >= 400
 
         response.body = ''
@@ -92,6 +92,7 @@ module.exports = function (server) {
             date: '.publication-meta-date',
             abstract: '.publication-abstract .nova-e-text--spacing-auto'
           }
+          console.log('ccccccxxxxxxxxxx')
           // publication-author-list
           const foobar = dom.window.document.querySelectorAll('.publication-author-list__item')
           console.log(foobar)
