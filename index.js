@@ -111,7 +111,7 @@ server = restify.createServer({
 });
 
 server.use(restify.CORS({
-  origins: ['https://kaleguy.github.io']//,   // defaults to ['*']
+  origins: ['https://kaleguy.github.io', 'https://travis-ci.org/']//,   // defaults to ['*']
 //  credentials: true,                 // defaults to false
  // headers: ['x-foo']                 // sets expose-headers
 }));
