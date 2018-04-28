@@ -8,7 +8,7 @@ const moment = require('moment')
 
 nconf.argv()
   .env()
-  .file({ file: '.config.json' });
+  .file({ file: '.config.json' })
 
 function getDomText (dom, selector) {
   let text = ''
@@ -56,31 +56,31 @@ module.exports = function (server) {
    *           content-type: "text/plain"
    */
   server.get('/rg/article/:id', function (req, res, next) {
-    var id = req.params.id;
+    var id = req.params.id
     // id = '304662727_Ideological_Reactivity_Political_Conservatism_and_Brain_Responsivity_to_Emotional_and_Neutral_Stimuli'
 
-    const host = 'www.researchgate.net';
+    const host = 'www.researchgate.net'
 
     // Creates a JSON client
     const client = restify.createClient({
       url: 'https://' + host
     });
 
-    client.get('/publication/' + id, function(err, req) {
-      assert.ifError(err); // connection error
+    client.get('/publication/' + id, function (err, req) {
+      assert.ifError(err) // connection error
 
-      req.on('result', function(err, response) {
-        assert.ifError(err); // HTTP status code >= 400
+      req.on('result', function (err, response) {
+        assert.ifError(err) // HTTP status code >= 400
 
-        response.body = '';
-        response.setEncoding('utf8');
-        response.on('data', function(chunk) {
-          response.body += chunk;
-        });
+        response.body = ''
+        response.setEncoding('utf8')
+        response.on('data', function (chunk) {
+          response.body += chunk
+        })
         // .name
-        response.on('end', function() {
+        response.on('end', function () {
           const body = response.body
-          const dom = new JSDOM(body);
+          const dom = new JSDOM(body)
           const selectors = {
             title: 'h1.nova-e-text--size-xxxl',
             cits: 'h1.nova-e-text--size-xxxl',
@@ -93,10 +93,9 @@ module.exports = function (server) {
           console.log(foobar)
           const data = getDataFromSelectors(dom, selectors)
           res.json(data)
-        });
-      });
-    });
+        })
+      })
+    })
+  })
 
-  });
-
-};
+}
