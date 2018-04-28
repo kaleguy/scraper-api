@@ -6,7 +6,7 @@ const assert = require('assert');
 // no headers set
 test('weather route', function(t) {
   request(server)
-    .get('/weather/nyc')
+    .get('/weather/new york')
     .expect(200)
     .expect('Content-Type', /json/)
     .end(function(err, res) {
