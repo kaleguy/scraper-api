@@ -84,7 +84,7 @@ module.exports = function (server) {
    *         headers:
    *           Accept: 'text/plain'
    *         params:
-   *          city: NYC
+   *          city: new york
    *       responses:
    *          200:
    *            headers:
@@ -92,8 +92,7 @@ module.exports = function (server) {
    *
    */
   server.get('/weather/:city', function (req, res, next) {
-     var city = req.params.city;
-
+    var city = req.params.city;
     const host = 'api.openweathermap.org"; ///data/2.5/weather?q=';
     const urlSuffix = '&units=imperial&appid=' + appId;
 
@@ -101,8 +100,9 @@ module.exports = function (server) {
     const client = restify.createJsonClient({
       url: 'http://' + host
     });
-
-    client.get('/data/2.5/weather?q=' + city + urlSuffix, function(err, treq, tres, obj) {
+    const p = '/data/2.5/weather?q=' + encodeURIComponent(city) + urlSuffix;
+    client.get(p, function(err, treq, tres, obj) {
+      if (err) { return res.send(err.message) }
       res.send(obj);
     });
 
