@@ -4,21 +4,11 @@
 
 ## Synopsis
 
-A simple wrapper for the [OpenWeatherMap API](https://openweathermap.org/api) using Restify (version 4).
+A proxy to provide a basic JSON API to ResearchGate.
 
-## Motivation
-
-Simple boilerplate and demo to:
-
-* Create a restify server to proxy OpenWeatherMap
-* Document the routes with Swagger JSDocs
-* Create tests with Swagger Test
-
-This project was originally created to be used with 
-[another demo project](https://github.com/kaleguy/simpleng2admin) hosted on Github pages.
-There is a not a free endpoint on https from OpenWeatherMap and Github pages are served
-via https, so a proxy is necessary.
-
+Also demos a simple wrapper for the [OpenWeatherMap API](https://openweathermap.org/api).
+ 
+Implemented with Restify (version 4).
 
 ## Installation
 
