@@ -22,6 +22,7 @@ module.exports = function (server) {
    *         in: path
    *         description: "The city you want weather for in the form city,state,country"
    *         required: true
+   *         default: new york
    *         type: string
    *         consumes:
    *           - application/json
@@ -72,7 +73,7 @@ module.exports = function (server) {
    *     - description: Get Weather
    *       request:
    *         params:
-   *           city: NYC
+   *           city: new york
    *       responses:
    *          200:
    *            headers:

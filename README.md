@@ -67,7 +67,10 @@ The x-amples section in the comments above will be turned into a test by swagger
 ## API Reference
 
 Swagger Docs generated from inline Swagger comments, processed by Swagger-JSDocs. 
-Check out the source for more info. 
+
+When running locally the Swagger UI will be reachable at http://localhost:8888/public/swagger/index.html
+
+Online version:
 
 [Swagger UI](https://tranquil-headland-86417.herokuapp.com/public/swagger/index.html)
 

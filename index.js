@@ -17,6 +17,7 @@ var options = {
   },
   apis: [
     __dirname + '/routes/weather.js',
+    __dirname + '/routes/rg.js',
     __dirname + '/index.js'
   ] // Path to the API docs
 };
