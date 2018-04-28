@@ -63,9 +63,8 @@ module.exports = function (server) {
     const host = 'www.researchgate.net'
 
     // Creates a JSON client
-    const client = restify.createClient({
-      url: 'https://' + host
-    });
+    const url = 'https://' + host
+    const client = restify.createClient({ url });
     console.log('=============url: ', url + '/publication/' + id)
     client.get('/publication/' + id, function (err, req) {
 
