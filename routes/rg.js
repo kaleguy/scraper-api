@@ -75,7 +75,7 @@ module.exports = function (server) {
         retry: false
       }
     );
-    console.log('VVV 7bb=============url: ', url + '/publication/' + id)
+    console.log('VVV test 7bb=============url: ', url + '/publication/' + id)
     client.get('/publication/' + id, function (err, req) {
 
       if (err) { console.log('Error:', err) }
