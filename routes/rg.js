@@ -133,9 +133,8 @@ module.exports = function (server) {
               ]
             }
           }
-          const foobar = dom.window.document.querySelectorAll('.publication-author-list__item')
-          console.log(foobar)
           const data = getDataFromSelectors(dom, selectors)
+          data.url = url + '/publication/' + id
           return res.json(data)
         })
       })

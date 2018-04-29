@@ -6,9 +6,47 @@
 
 A proxy to provide a basic JSON API to ResearchGate.
 
-Also demos a simple wrapper for the [OpenWeatherMap API](https://openweathermap.org/api).
+The existing endpoint can be easily adapted to scrape a different site.
+
+Sample output:
+
+```
+{
+   "pubdate":"2015/10/01",
+   "title":"Differences in Media Preference Mediate the Link Between Personality and Political Orientation",
+   "cits":"6",
+   "refs":"62",
+   "date":"2015-10",
+   "reads":"2,632 Reads",
+   "journal":{
+      "href":"journal/1467-9221_Political_Psychology",
+      "text":"Political Psychology"
+   },
+   "abstract":"Research has consistently demonstrated that political liberalism is predicted by the personality trait Openness to Experience and conservatism by trait Conscientiousness. Less well studied, however, is how trait personality influences political orientation. The present study investigated whether differences in media preference might mediate the links between personality and political orientation. Participants completed measures of Big Five personality, media preferences, and political orientation. Results revealed that increased preferences for Dark/Alternative and Aesthetic/Musical media genres, as well as decreased preferences for Communal/Popular media genres, mediated the association between Openness to Experience and liberalism. In contrast, greater preferences for Communal/Popular and Thrilling/Action genres, as well as lower preferences for Dark/Alternative and Aesthetic/Musical genres mediated the link between Conscientiousness and conservatism.",
+   "authors":[
+      {
+         "name":{
+            "href":"https://www.researchgate.net/profile/Xiaowen_Xu4",
+            "text":"Xiaowen Xu"
+         },
+         "rating":"14.72",
+         "institution":"University of Toronto"
+      },
+      {
+         "name":{
+            "href":"https://www.researchgate.net/profile/Jordan_Peterson2",
+            "text":"Jordan B Peterson"
+         },
+         "rating":"39.79",
+         "institution":"University of Toronto"
+      }
+   ],
+   "url":"https://www.researchgate.net/publication/282790843_Differences_in_Media_Preference_Mediate_the_Link_Between_Personality_and_Political_Orientation"
+}
+```
+
  
-Implemented with Restify (version 4).
+Implemented with Restify (version 7).
 
 ## Installation
 
