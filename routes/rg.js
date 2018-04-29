@@ -74,14 +74,14 @@ module.exports = function (server) {
 
   /**
    * @swagger
-   * /rg/article/{title}:
+   * /rg/article:
    *   get:
    *     description: "Returns ResearchGate article info."
    *     summary: "Get ResearchGate article info"
    *     tags: [ResearchGate]
    *     parameters:
    *       - name: title
-   *         in: path
+   *         in: query
    *         description: "The ResearchGate article title"
    *         required: true
    *         default: 304662727_Ideological_Reactivity_Political_Conservatism_and_Brain_Responsivity_to_Emotional_and_Neutral_Stimuli
