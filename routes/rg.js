@@ -1,6 +1,5 @@
 const assert = require('assert')
 const restify = require('restify-clients')
-const axios = require('axios')
 const nconf = require('nconf')
 const jsdom = require('jsdom');
 const _ = require('lodash')
