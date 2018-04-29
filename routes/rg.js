@@ -70,7 +70,7 @@ module.exports = function (server) {
     // Creates a JSON client
     const url = 'https://' + host
     const client = restify.createClient({ url });
-    console.log('=============url: ', url + '/publication/' + id)
+    console.log('VVV 7=============url: ', url + '/publication/' + id)
     client.get('/publication/' + id, function (err, req) {
 
       if (err) { console.log('Error:', err) }
@@ -78,7 +78,7 @@ module.exports = function (server) {
       // assert.ifError(err) // connection error
 
       req.on('result', function (err, response) {
-        console.log('=========================xxxxxxxx===========')
+        console.log('VERSION 7=========================xxxxxxxx===========')
         // assert.ifError(err) // HTTP status code >= 400
         if (err) { console.log('Error result:', err) }
 
