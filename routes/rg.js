@@ -117,8 +117,8 @@ module.exports = function (server) {
           const selectors = {
             pubdate: 'meta[property="citation_publication_date"]',
             title: 'h1.nova-e-text--size-xxxl',
-            cits: '.ga-resources-citations span.publication-resource-link-amount',
-            refs: '.ga-resources-references span.publication-resource-link-amount',
+            citations: '.ga-resources-citations span.publication-resource-link-amount',
+            references: '.ga-resources-references span.publication-resource-link-amount',
             date: '.publication-meta-date',
             reads: '.publication-meta-stats',
             journal: '.publication-meta-journal A',
@@ -187,7 +187,10 @@ module.exports = function (server) {
              title: 'SPAN.title',
              name: 'H1 SPAN',
              institution: '.info-header A:first-child',
-             department: '.info-header A:nth-child(2)'
+             department: '.info-header A:nth-child(2)',
+             researchItems: 'DIV.section-about>DIV:nth-child(2) .nova-o-grid.nova-o-grid--gutter-xxl.nova-o-grid--order-normal.nova-o-grid--horizontal-align-left.nova-o-grid--vertical-align-top DIV>DIV',
+             reads: 'DIV.section-about>DIV:nth-child(2) .nova-o-grid.nova-o-grid--gutter-xxl.nova-o-grid--order-normal.nova-o-grid--horizontal-align-left.nova-o-grid--vertical-align-top DIV:nth-child(2)>DIV',
+             citations: 'DIV.section-about>DIV:nth-child(2) .nova-o-grid.nova-o-grid--gutter-xxl.nova-o-grid--order-normal.nova-o-grid--horizontal-align-left.nova-o-grid--vertical-align-top DIV:nth-child(3)>DIV'
           }
           const data = getDataFromSelectors(dom, selectors)
           data.url = url + '/profile/' + id
