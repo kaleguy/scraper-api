@@ -12,7 +12,7 @@ describe('OpenWeatherMap API', function(){
 
   it('Get the correct city name returned', function (done){
 
-    serverOptions.uri += 'nyc';
+    serverOptions.uri += 'new york';
     preq.get(serverOptions)
       .then(function(res){
          console.log('Response: ', serverOptions.uri, res.body);

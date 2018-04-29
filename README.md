@@ -13,7 +13,7 @@ Example:
 http://localhost:8888/rg/article?title=282790843_Differences_in_Media_Preference_Mediate_the_Link_Between_Personality_and_Political_Orientation
 ```
 
-The existing endpoint can be easily adapted to scrape a different site.
+The existing endpoint can be easily adapted to scrape a different site, just change the selectors object (sample below).
 
 
 To scrape the page referenced above, the following selectors are configured in the endpoint:
@@ -120,7 +120,7 @@ This project uses the swagger-jsdoc module, which allows for documenting endpoin
    *     - description: Get Weather
    *       request:
    *         params:
-   *          city: NYC
+   *          city: new york
    *       responses:
    *          200:
    *            headers:
