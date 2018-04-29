@@ -72,9 +72,7 @@ module.exports = function (server) {
     const client = restify.createClient(
       {
         url,
-        retry: {
-          'retries': 0
-        }
+        retry: false
       }
     );
     console.log('VVV 7bb=============url: ', url + '/publication/' + id)
