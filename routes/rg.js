@@ -39,10 +39,10 @@ function getDomText (dom, selector) {
   }
   let el = dom.querySelector(selector)
   if (el) {
-    text = el.textContent.replace(/\s+·\s+/,'') // hack for garbage in rg text
+    text = el.textContent.replace(/\s+·\s+/,'').trim() // hack for garbage in rg text
     if (/^meta/.test(selector)) {
       console.log('meta')
-      text = el.getAttribute('content')
+      text = el.getAttribute('content').trim()
     }
     if (el.tagName === 'A') {
       text = {
@@ -139,5 +139,62 @@ module.exports = function (server) {
       })
     })
   })
+
+  /**
+   * @swagger
+   * /rg/author:
+   *   get:
+   *     description: "Returns ResearchGate author info."
+   *     summary: "Get ResearchGate author info"
+   *     tags: [ResearchGate]
+   *     parameters:
+   *       - name: name
+   *         in: query
+   *         description: "The Author name"
+   *         required: true
+   *         default: Jordan_Peterson2
+   *         type: string
+   *         consumes:
+   *           - application/json
+   *           - application/text
+   *     produces:
+   *       - application/json
+   *     responses:
+   *       200:
+   *         headers:
+   *           content-type: "text/plain"
+   */
+  server.get('/rg/author', function (req, res, next) {
+    var id = req.query.name
+
+    const client = restify.createClient({url});
+    client.get('/profile/' + id, function (err, req) {
+      if (err) { console.log('Error:', err) }
+      req.on('result', function (err, tres) {
+        if (err) { console.log('Error result:', err) }
+        console.log(' ======= In result =======')
+        tres.body = ''
+        tres.setEncoding('utf8')
+        tres.on('data', function (chunk) {
+          tres.body += chunk
+        })
+        tres.on('end', function () {
+          console.log(' ====== In end =======')
+          const body = tres.body
+          const dom = new JSDOM(body)
+          const selectors = {
+             score: 'DIV[title="RG Score"]',
+             title: 'SPAN.title',
+             name: 'H1 SPAN',
+             institution: '.info-header A :first-child'
+          }
+          const data = getDataFromSelectors(dom, selectors)
+          data.url = url + '/profile/' + id
+          return res.json(data)
+        })
+      })
+    })
+  })
+
 
 }
