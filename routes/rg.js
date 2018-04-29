@@ -186,7 +186,8 @@ module.exports = function (server) {
              score: 'DIV[title="RG Score"]',
              title: 'SPAN.title',
              name: 'H1 SPAN',
-             institution: '.info-header A :first-child'
+             institution: '.info-header A:first-child',
+             department: '.info-header A:nth-child(2)'
           }
           const data = getDataFromSelectors(dom, selectors)
           data.url = url + '/profile/' + id
