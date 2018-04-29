@@ -1,5 +1,6 @@
 const assert = require('assert')
 const restify = require('restify-clients')
+const axios = require('axios')
 const nconf = require('nconf')
 const jsdom = require('jsdom');
 const _ = require('lodash')
@@ -10,18 +11,53 @@ nconf.argv()
   .env()
   .file({ file: '.config.json' })
 
+const url = 'https://www.researchgate.net'
+
+function getDomList (dom, selector) {
+  const items = []
+  let els = dom.querySelectorAll(selector.selector)
+  const subselectors = selector.subselectors
+  els.forEach(el => {
+    let item = {}
+    _.each(subselectors, (s) => {
+      let t = ''
+      let propName = Object.keys(s)[0]
+      let propSelector = s[propName]
+      if (el.querySelector(propSelector)) {
+        t = getDomText(el, propSelector)
+      }
+      item[propName] = t
+    })
+    items.push(item)
+  })
+  return items
+}
+
 function getDomText (dom, selector) {
   let text = ''
-  let el = dom.window.document.querySelector(selector)
+  if (_.isObject(selector)) {
+    return getDomList(dom, selector)
+  }
+  let el = dom.querySelector(selector)
   if (el) {
-    text = el.textContent.replace(/\s+·\s+/,'')
+    text = el.textContent.replace(/\s+·\s+/,'') // hack for garbage in rg text
+    if (/^meta/.test(selector)) {
+      console.log('meta')
+      text = el.getAttribute('content')
+    }
+    if (el.tagName === 'A') {
+      text = {
+        href: el.getAttribute('href'),
+        text: text
+      }
+    }
   }
   return text
 }
 function getDataFromSelectors (dom, selectors) {
   const data = {}
   _.each(selectors, (v, k) => {
-    let t = getDomText(dom, v)
+    let t = getDomText(dom.window.document, v)
     if ((k === 'date') && t) {
       try {
         t = moment(t).format('YYYY-MM')
@@ -30,6 +66,7 @@ function getDataFromSelectors (dom, selectors) {
       }
     }
     data[k] = t
+    console.log('k================', k, t)
   })
   return data
 }
@@ -62,49 +99,40 @@ module.exports = function (server) {
    */
   server.get('/rg/article', function (req, res, next) {
     var id = req.query.title
-    console.log('.............=========', id)
-    // id = '304662727_Ideological_Reactivity_Political_Conservatism_and_Brain_Responsivity_to_Emotional_and_Neutral_Stimuli'
 
-    const host = 'www.researchgate.net'
-
-    // Creates a JSON client
-    const url = 'https://' + host
-    const client = restify.createClient(
-      {
-        url,
-        retry: false
-      }
-    );
-    console.log('VVV test 7bb=============url: ', url + '/publication/' + id)
+    const client = restify.createClient({url});
     client.get('/publication/' + id, function (err, req) {
-
       if (err) { console.log('Error:', err) }
-
-      // assert.ifError(err) // connection error
-
-      req.on('result', function (err, response) {
-        console.log('VERSION 7=========================xxxxxxxx===========')
-        // assert.ifError(err) // HTTP status code >= 400
+      req.on('result', function (err, tres) {
         if (err) { console.log('Error result:', err) }
-
-        response.body = ''
-        response.setEncoding('utf8')
-        response.on('data', function (chunk) {
-          response.body += chunk
+        console.log(' ======= In result =======')
+        tres.body = ''
+        tres.setEncoding('utf8')
+        tres.on('data', function (chunk) {
+          tres.body += chunk
         })
-        // .name
-        response.on('end', function () {
-          const body = response.body
+        tres.on('end', function () {
+          console.log(' ====== In end =======')
+          const body = tres.body
           const dom = new JSDOM(body)
           const selectors = {
+            pubdate: 'meta[property="citation_publication_date"]',
             title: 'h1.nova-e-text--size-xxxl',
-            cits: 'h1.nova-e-text--size-xxxl',
-            refs: 'span.publication-resource-link-amount',
+            cits: '.ga-resources-citations span.publication-resource-link-amount',
+            refs: '.ga-resources-references span.publication-resource-link-amount',
             date: '.publication-meta-date',
-            abstract: '.publication-abstract .nova-e-text--spacing-auto'
+            reads: '.publication-meta-stats',
+            journal: '.publication-meta-journal A',
+            abstract: '.publication-abstract .nova-e-text--spacing-auto',
+            authors: {
+              selector: '.publication-author-list__item',
+              subselectors: [
+                { name: '.nova-v-person-list-item__title A' },
+                { rating: '.nova-v-person-list-item__meta SPAN:first-child' },
+                { institution: '.nova-v-person-list-item__meta LI:nth-child(2) SPAN' }
+              ]
+            }
           }
-          console.log('ccccccxxxxxxxxxx')
-          // publication-author-list
           const foobar = dom.window.document.querySelectorAll('.publication-author-list__item')
           console.log(foobar)
           const data = getDataFromSelectors(dom, selectors)
