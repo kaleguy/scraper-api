@@ -6,9 +6,40 @@
 
 A proxy to provide a basic JSON API to ResearchGate.
 
+Currently there is just one endpoint implemented, which returns information about a single article.
+
+Example:
+```
+http://localhost:8888/rg/article?title=282790843_Differences_in_Media_Preference_Mediate_the_Link_Between_Personality_and_Political_Orientation
+```
+
 The existing endpoint can be easily adapted to scrape a different site.
 
-Sample output:
+
+To scrape the page referenced above, the following selectors are configured in the endpoint:
+
+```
+const selectors = {
+  pubdate: 'meta[property="citation_publication_date"]',
+  title: 'h1.nova-e-text--size-xxxl',
+  cits: '.ga-resources-citations span.publication-resource-link-amount',
+  refs: '.ga-resources-references span.publication-resource-link-amount',
+  date: '.publication-meta-date',
+  reads: '.publication-meta-stats',
+  journal: '.publication-meta-journal A',
+  abstract: '.publication-abstract .nova-e-text--spacing-auto',
+  authors: {
+    selector: '.publication-author-list__item',
+    subselectors: [
+      { name: '.nova-v-person-list-item__title A' },
+      { rating: '.nova-v-person-list-item__meta SPAN:first-child' },
+      { institution: '.nova-v-person-list-item__meta LI:nth-child(2) SPAN' }
+    ]
+  }
+}
+```
+
+Sample output for the above url:
 
 ```
 {
@@ -50,7 +81,8 @@ Implemented with Restify (version 7).
 
 ## Installation
 
-Rename .config.example.json to .config.json, edit with your openWeather API key. Then
+If you want the weather demo endpoint to be functional,
+rename .config.example.json to .config.json, edit with your openWeather API key. Then
 
 ```
 npm install
@@ -60,6 +92,7 @@ npm start
 ## Swagger-JSDoc and Swagger-Test
 
 Using the swagger-jsdoc module allows you to document your code inline with Swagger YAML:
+(The example below below is for the example Open Weather API endpoint.
 
 ```
   /**
