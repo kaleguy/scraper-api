@@ -77,7 +77,7 @@ module.exports = function (server) {
         }
       }
     );
-    console.log('VVV 7=============url: ', url + '/publication/' + id)
+    console.log('VVV 7bb=============url: ', url + '/publication/' + id)
     client.get('/publication/' + id, function (err, req) {
 
       if (err) { console.log('Error:', err) }
