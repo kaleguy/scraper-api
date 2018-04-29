@@ -8,11 +8,20 @@ var exports = module.exports = {}
 const options = {
   swaggerDefinition: {
     info: {
-      title: 'OpenWeatherMap Proxy', // Title (required)
-      description: 'This is a simple wrapper for the OpenWeatherMap API.',
+      title: 'Scraper API for ResearchGate', // Title (required)
+      description: 'Endpoints for extracting JSON data from ResearchGate endpoints',
       version: '1.0.0' // Version (required)
     },
-    host:'localhost:8888',
+    "tags": [
+      {
+        "name": "Weather",
+        "description": "Simple pass-through demo endpoint."
+      },
+      {
+        "name": "ResearchGate",
+        "description": "Endpoints to extract JSON from ResearchGate pages."
+      }
+    ],
     basePath: '',
     schemes: ['http']
   },

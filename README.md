@@ -91,7 +91,7 @@ npm start
 
 ## Swagger-JSDoc and Swagger-Test
 
-Using the swagger-jsdoc module allows you to document your code inline with Swagger YAML:
+This project uses the swagger-jsdoc module, which allows for documenting endpoints inline with Swagger YAML:
 (The example below below is for the example Open Weather API endpoint.
 
 ```
@@ -144,6 +144,8 @@ When running locally the Swagger UI will be reachable at http://localhost:8888/p
 Online version:
 
 [Swagger UI](https://tranquil-headland-86417.herokuapp.com/public/swagger/index.html)
+
+The hosted version of this project currently does not have a functional ResearchGate endpoint due to constraints on Heroku. However, as of this moment the api works correctly when run locally. The Swagger docs and Weather endpoint do work on the hosted version.
 
 ## Tests
 
