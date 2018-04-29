@@ -69,7 +69,14 @@ module.exports = function (server) {
 
     // Creates a JSON client
     const url = 'https://' + host
-    const client = restify.createClient({ url });
+    const client = restify.createClient(
+      {
+        url,
+        retry: {
+          'retries': 0
+        }
+      }
+    );
     console.log('VVV 7=============url: ', url + '/publication/' + id)
     client.get('/publication/' + id, function (err, req) {
 
