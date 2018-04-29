@@ -6,14 +6,14 @@
 
 A proxy to provide a basic JSON API to ResearchGate.
 
-Currently there is just one endpoint implemented, which returns information about a single article.
+Currently there are two endpoints implemented, one for informatio about a particular article, the other for information about an author. See the Swagger docs (below) for more info.
 
 Example:
 ```
 http://localhost:8888/rg/article?title=282790843_Differences_in_Media_Preference_Mediate_the_Link_Between_Personality_and_Political_Orientation
 ```
 
-The existing endpoint can be easily adapted to scrape a different site, just change the selectors object (sample below).
+The existing endpoint can be easily adapted to scrape a different site.
 
 
 To scrape the page referenced above, the following selectors are configured in the endpoint:
@@ -120,7 +120,7 @@ This project uses the swagger-jsdoc module, which allows for documenting endpoin
    *     - description: Get Weather
    *       request:
    *         params:
-   *          city: new york
+   *          city: NYC
    *       responses:
    *          200:
    *            headers:
