@@ -1,4 +1,4 @@
-const restify = require('restify');
+const restify = require('restify-clients');
 const nconf = require('nconf');
 
 nconf.argv()

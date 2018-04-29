@@ -1,10 +1,11 @@
 /*jslint node: true, indent: 2 */
-'use strict';
+'use strict'
 
-var swaggerJSDoc = require('swagger-jsdoc');
-var exports = module.exports = {};
+const corsMiddleware = require('restify-cors-middleware')
+const swaggerJSDoc = require('swagger-jsdoc')
+var exports = module.exports = {}
 
-var options = {
+const options = {
   swaggerDefinition: {
     info: {
       title: 'OpenWeatherMap Proxy', // Title (required)
@@ -20,8 +21,8 @@ var options = {
     __dirname + '/routes/rg.js',
     __dirname + '/index.js'
   ] // Path to the API docs
-};
-var swaggerSpec = swaggerJSDoc(options);
+}
+const swaggerSpec = swaggerJSDoc(options)
 
 /**
  *
@@ -69,96 +70,81 @@ var swaggerSpec = swaggerJSDoc(options);
  */
 
 
- var restify, bunyan, routes, log, server;
+let restify, bunyan, routes, log, server
 
-restify = require('restify');
-bunyan  = require('bunyan');
-routes  = require('./routes/');
+restify = require('restify')
+bunyan  = require('bunyan')
+routes  = require('./routes/')
 
 log = bunyan.createLogger({
   name        : 'restify',
   level       : process.env.LOG_LEVEL || 'info',
   stream      : process.stdout,
   serializers : bunyan.stdSerializers
-});
+})
 
 server = restify.createServer({
   name : 'restify',
   log  : log,
-  formatters : {
-    'application/json' : function (req, res, body, cb) {
-      res.setHeader('Cache-Control', 'must-revalidate');
+})
 
-/*
-     // Does the client *explicitly* accept application/json?
-      var sendPlainText = '';
-      if (req.header('Accept')){
-        sendPlainText = req.header('Accept').split(/, *!/).indexOf('application/json') === -1;
-      }
 
-      if (sendPlainText) {
-        res.setHeader('Content-Type', 'text/plain; charset=utf-8');
-      }
-      // Send as JSON
-      if (!sendPlainText) {
-        res.setHeader('Content-Type', 'application/json; charset=utf-8');
-      }
-*/
-
-      res.setHeader('Content-Type', 'application/json; charset=utf-8');
-      return cb(null, JSON.stringify(body));
-    }
-  }
-});
-
-server.use(restify.CORS({
+server.use(corsMiddleware({
   origins: ['https://kaleguy.github.io', 'https://travis-ci.org/']//,   // defaults to ['*']
 //  credentials: true,                 // defaults to false
  // headers: ['x-foo']                 // sets expose-headers
-}));
-server.use(restify.bodyParser({ mapParams: false }));
-server.use(restify.queryParser());
-server.use(restify.gzipResponse());
-server.pre(restify.pre.sanitizePath());
+}).actual)
+server.use(restify.plugins.bodyParser({ mapParams: false }))
+server.use(restify.plugins.queryParser())
+server.use(restify.plugins.gzipResponse())
+server.pre(restify.plugins.pre.sanitizePath())
+
+// This version of restify can't handle hyphens in url params... gross hack here to fix
+function encodeHyphens(req, res, next) {
+    req.url = req.url.replace(/-/g, '__');
+    return next();
+}
+// server.pre(encodeHyphens)
 
 /*jslint unparam:true*/
 // Default error handler. Personalize according to your needs.
 /* istanbul ignore next */
 server.on('uncaughtException', function (req, res, route, err) {
-  console.log('******* Begin Error *******');
-  console.log(route);
-  console.log('*******');
-  console.log(err.stack);
-  console.log('******* End Error *******');
+  console.log('******* Begin Error *******')
+  console.log(route)
+  console.log('*******')
+  console.log(err.stack)
+  console.log('******* End Error *******')
   if (!res.headersSent) {
-    return res.send(500, { ok : false });
+    return res.send(500, { ok : false })
   }
-  res.write("\n");
-  res.end();
-});
+  res.write("\n")
+  res.end()
+})
 /*jslint unparam:false*/
 
-server.on('after', restify.auditLogger({ log: log }));
-routes(server);
+// server.on('after', restify.plugins.auditLogger({ log: log }))
+routes(server)
 
 // serve swagger docs
-server.get(/\/public\/?.*/, restify.serveStatic({
-  directory: __dirname
-}));
+server.get('/public/swagger/*', restify.plugins.serveStatic({
+  directory: __dirname,
+  default: 'index.html'
+}))
 
 // serve swagger spec
 server.get('/api-docs.json', function(req, res) {
-  res.setHeader('Content-Type', 'application/json');
-  res.send(swaggerSpec);
-});
+  res.setHeader('Content-Type', 'application/json')
+  res.send(swaggerSpec)
+})
 
-console.log('Server started.');
+console.log('Server started.')
 server.listen(process.env.PORT || 8888, function () {
-  log.info('%s listening at %s', server.name, server.url);
-});
+  log.info('%s listening at %s', server.name, server.url)
+})
 
-var app = server;
-module.exports = app;
-exports.close = server.close;
+var app = server
+module.exports = app
+exports.close = server.close
 
 

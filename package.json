@@ -14,7 +14,9 @@
     "moment": "^2.22.1",
     "nconf": "^0.8.4",
     "request": "^2.79.0",
-    "restify": "4.0.4",
+    "restify": "^7.1.1",
+    "restify-clients": "^2.0.2",
+    "restify-cors-middleware": "^1.1.0",
     "swagger-jsdoc": "^1.9.2"
   },
   "devDependencies": {
@@ -28,6 +30,7 @@
     "tap-spec": "^4.1.1",
     "tape": "^4.6.3"
   },
+  "license": "MIT",
   "scripts": {
     "start": "node index.js",
     "test": "node_modules/jshint/bin/jshint routes/ tests/ *.json index.js && node_modules/jasmine-node/bin/jasmine-node --verbose tests/",

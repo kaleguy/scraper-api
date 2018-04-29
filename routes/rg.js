@@ -1,5 +1,5 @@
 const assert = require('assert')
-const restify = require('restify')
+const restify = require('restify-clients')
 const nconf = require('nconf')
 const jsdom = require('jsdom');
 const _ = require('lodash')
@@ -22,8 +22,12 @@ function getDataFromSelectors (dom, selectors) {
   const data = {}
   _.each(selectors, (v, k) => {
     let t = getDomText(dom, v)
-    if (k === 'date') {
-      t = moment(t).format('YYYY-MM')
+    if ((k === 'date') && t) {
+      try {
+        t = moment(t).format('YYYY-MM')
+      } catch (e) {
+
+      }
     }
     data[k] = t
   })
@@ -56,8 +60,9 @@ module.exports = function (server) {
    *         headers:
    *           content-type: "text/plain"
    */
-  server.get('/rg/article/:title', function (req, res, next) {
-    var id = req.params.title
+  server.get('/rg/article', function (req, res, next) {
+    var id = req.query.title
+    console.log('.............=========', id)
     // id = '304662727_Ideological_Reactivity_Political_Conservatism_and_Brain_Responsivity_to_Emotional_and_Neutral_Stimuli'
 
     const host = 'www.researchgate.net'
@@ -68,13 +73,14 @@ module.exports = function (server) {
     console.log('=============url: ', url + '/publication/' + id)
     client.get('/publication/' + id, function (err, req) {
 
-      if (err) { console.log('Error', err) }
+      if (err) { console.log('Error:', err) }
 
-      assert.ifError(err) // connection error
+      // assert.ifError(err) // connection error
 
       req.on('result', function (err, response) {
         console.log('=========================xxxxxxxx===========')
-        assert.ifError(err) // HTTP status code >= 400
+        // assert.ifError(err) // HTTP status code >= 400
+        if (err) { console.log('Error result:', err) }
 
         response.body = ''
         response.setEncoding('utf8')
@@ -97,7 +103,7 @@ module.exports = function (server) {
           const foobar = dom.window.document.querySelectorAll('.publication-author-list__item')
           console.log(foobar)
           const data = getDataFromSelectors(dom, selectors)
-          res.json(data)
+          return res.json(data)
         })
       })
     })
