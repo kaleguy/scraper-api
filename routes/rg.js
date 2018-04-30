@@ -12,6 +12,35 @@ nconf.argv()
 
 const url = 'https://www.researchgate.net'
 
+/**
+ *
+ * @param selectors {object} Object with css selectors for plucking data
+ * @param section {string} e.g. /profile/, the subpath in the target API for a particular endpoint
+ * @param id {string} id for path, e.g. name of author
+ * @param res {object} the restify response object
+ */
+function returnScrapedJSON (selectors, section, id, res) {
+  const client = restify.createClient({url});
+  client.get(section + id, function (err, req) {
+    if (err) { console.log('Error:', err) }
+    req.on('result', function (err, tres) {
+      if (err) { console.log('Error result:', err) }
+      tres.body = ''
+      tres.setEncoding('utf8')
+      tres.on('data', function (chunk) {
+        tres.body += chunk
+      })
+      tres.on('end', function () {
+        const body = tres.body
+        const dom = new JSDOM(body)
+        const data = getDataFromSelectors(dom, selectors)
+        data.url = url + section + id
+        return res.json(data)
+      })
+    })
+  })
+}
+
 function getDomList (dom, selector) {
   const items = []
   let els = dom.querySelectorAll(selector.selector)
@@ -65,7 +94,6 @@ function getDataFromSelectors (dom, selectors) {
       }
     }
     data[k] = t
-    console.log('k================', k, t)
   })
   return data
 }
@@ -97,47 +125,26 @@ module.exports = function (server) {
    *           content-type: "text/plain"
    */
   server.get('/rg/article', function (req, res, next) {
-    var id = req.query.title
-
-    const client = restify.createClient({url});
-    client.get('/publication/' + id, function (err, req) {
-      if (err) { console.log('Error:', err) }
-      req.on('result', function (err, tres) {
-        if (err) { console.log('Error result:', err) }
-        console.log(' ======= In result =======')
-        tres.body = ''
-        tres.setEncoding('utf8')
-        tres.on('data', function (chunk) {
-          tres.body += chunk
-        })
-        tres.on('end', function () {
-          console.log(' ====== In end =======')
-          const body = tres.body
-          const dom = new JSDOM(body)
-          const selectors = {
-            pubdate: 'meta[property="citation_publication_date"]',
-            title: 'h1.nova-e-text--size-xxxl',
-            citations: '.ga-resources-citations span.publication-resource-link-amount',
-            references: '.ga-resources-references span.publication-resource-link-amount',
-            date: '.publication-meta-date',
-            reads: '.publication-meta-stats',
-            journal: '.publication-meta-journal A',
-            abstract: '.publication-abstract .nova-e-text--spacing-auto',
-            authors: {
-              selector: '.publication-author-list__item',
-              subselectors: [
-                { name: '.nova-v-person-list-item__title A' },
-                { rating: '.nova-v-person-list-item__meta SPAN:first-child' },
-                { institution: '.nova-v-person-list-item__meta LI:nth-child(2) SPAN' }
-              ]
-            }
-          }
-          const data = getDataFromSelectors(dom, selectors)
-          data.url = url + '/publication/' + id
-          return res.json(data)
-        })
-      })
-    })
+    const id = req.query.title
+    const selectors = {
+      pubdate: 'meta[property="citation_publication_date"]',
+      title: 'h1.nova-e-text--size-xxxl',
+      citations: '.ga-resources-citations span.publication-resource-link-amount',
+      references: '.ga-resources-references span.publication-resource-link-amount',
+      date: '.publication-meta-date',
+      reads: '.publication-meta-stats',
+      journal: '.publication-meta-journal A',
+      abstract: '.publication-abstract .nova-e-text--spacing-auto',
+      authors: {
+        selector: '.publication-author-list__item',
+        subselectors: [
+          { name: '.nova-v-person-list-item__title A' },
+          { rating: '.nova-v-person-list-item__meta SPAN:first-child' },
+          { institution: '.nova-v-person-list-item__meta LI:nth-child(2) SPAN' }
+        ]
+      }
+    }
+    returnScrapedJSON(selectors, '/publication/', id, res)
   })
 
   /**
@@ -166,39 +173,17 @@ module.exports = function (server) {
    */
   server.get('/rg/author', function (req, res, next) {
     var id = req.query.name
-
-    const client = restify.createClient({url});
-    client.get('/profile/' + id, function (err, req) {
-      if (err) { console.log('Error:', err) }
-      req.on('result', function (err, tres) {
-        if (err) { console.log('Error result:', err) }
-        console.log(' ======= In result =======')
-        tres.body = ''
-        tres.setEncoding('utf8')
-        tres.on('data', function (chunk) {
-          tres.body += chunk
-        })
-        tres.on('end', function () {
-          console.log(' ====== In end =======')
-          const body = tres.body
-          const dom = new JSDOM(body)
-          const selectors = {
-             score: 'DIV[title="RG Score"]',
-             title: 'SPAN.title',
-             name: 'H1 SPAN',
-             institution: '.info-header A:first-child',
-             department: '.info-header A:nth-child(2)',
-             researchItems: 'DIV.section-about>DIV:nth-child(2) .nova-o-grid.nova-o-grid--gutter-xxl.nova-o-grid--order-normal.nova-o-grid--horizontal-align-left.nova-o-grid--vertical-align-top DIV>DIV',
-             reads: 'DIV.section-about>DIV:nth-child(2) .nova-o-grid.nova-o-grid--gutter-xxl.nova-o-grid--order-normal.nova-o-grid--horizontal-align-left.nova-o-grid--vertical-align-top DIV:nth-child(2)>DIV',
-             citations: 'DIV.section-about>DIV:nth-child(2) .nova-o-grid.nova-o-grid--gutter-xxl.nova-o-grid--order-normal.nova-o-grid--horizontal-align-left.nova-o-grid--vertical-align-top DIV:nth-child(3)>DIV'
-          }
-          const data = getDataFromSelectors(dom, selectors)
-          data.url = url + '/profile/' + id
-          return res.json(data)
-        })
-      })
-    })
+    const selectors = {
+      score: 'DIV[title="RG Score"]',
+      title: 'SPAN.title',
+      name: 'H1 SPAN',
+      institution: '.info-header A:first-child',
+      department: '.info-header A:nth-child(2)',
+      researchItems: 'DIV.section-about>DIV:nth-child(2) .nova-o-grid.nova-o-grid--gutter-xxl.nova-o-grid--order-normal.nova-o-grid--horizontal-align-left.nova-o-grid--vertical-align-top DIV>DIV',
+      reads: 'DIV.section-about>DIV:nth-child(2) .nova-o-grid.nova-o-grid--gutter-xxl.nova-o-grid--order-normal.nova-o-grid--horizontal-align-left.nova-o-grid--vertical-align-top DIV:nth-child(2)>DIV',
+      citations: 'DIV.section-about>DIV:nth-child(2) .nova-o-grid.nova-o-grid--gutter-xxl.nova-o-grid--order-normal.nova-o-grid--horizontal-align-left.nova-o-grid--vertical-align-top DIV:nth-child(3)>DIV'
+    }
+    returnScrapedJSON(selectors, '/profile/', id, res)
   })
-
 
 }
