@@ -81,8 +81,10 @@ Implemented with Restify (version 7).
 
 ## Installation
 
-If you want the weather demo endpoint to be functional,
-rename .config.example.json to .config.json, edit with your openWeather API key. Then
+Note: if you want the weather demo endpoint to be functional,
+rename .config.example.json to .config.json, edit with your openWeather API key.
+
+To install and run:
 
 ```
 npm install
