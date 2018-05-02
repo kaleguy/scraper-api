@@ -122,7 +122,7 @@ module.exports = function (server) {
     const id = req.query.name
     const selectors = {
       articles: {
-        selector: 'DIV.nova-o-stack--gutter-xxl.nova-o-stack.nova-o-stack--gutter-xxl.nova-o-stack--spacing-xl.nova-o-stack--show-divider .nova-o-stack__item',
+        selector: 'DIV[itemtype="http://schema.org/ScholarlyArticle"]',
         subselectors: [
           {title: 'A.nova-e-link'}
         ]
