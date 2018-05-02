@@ -143,7 +143,7 @@ module.exports = function (server) {
    *         in: query
    *         description: "The article title."
    *         required: true
-   *         default: Jordan_Peterson2
+   *         default: 269286890_Openness_to_Experience_and_Intellect_Differentially_Predict_Creative_Achievement_in_the_Arts_and_Sciences_Openness_Intellect_and_Creativity
    *         type: string
    *         consumes:
    *           - application/json
@@ -156,18 +156,17 @@ module.exports = function (server) {
    *           content-type: "text/plain"
    */
   server.get('/rg/citations', function (req, res, next) {
-    const id = req.query.name
+    const id = req.query.title
     const selectors = {
-      score: 'DIV[title="RG Score"]',
-      title: 'SPAN.title',
-      name: 'H1 SPAN',
-      institution: '.info-header A:first-child',
-      department: '.info-header A:nth-child(2)',
-      researchItems: 'DIV.section-about>DIV:nth-child(2) .nova-o-grid.nova-o-grid--gutter-xxl.nova-o-grid--order-normal.nova-o-grid--horizontal-align-left.nova-o-grid--vertical-align-top DIV>DIV',
-      reads: 'DIV.section-about>DIV:nth-child(2) .nova-o-grid.nova-o-grid--gutter-xxl.nova-o-grid--order-normal.nova-o-grid--horizontal-align-left.nova-o-grid--vertical-align-top DIV:nth-child(2)>DIV',
-      citations: 'DIV.section-about>DIV:nth-child(2) .nova-o-grid.nova-o-grid--gutter-xxl.nova-o-grid--order-normal.nova-o-grid--horizontal-align-left.nova-o-grid--vertical-align-top DIV:nth-child(3)>DIV'
+      citations: {
+        selector: '.pub-citations-list LI.pub-citations-list__item',
+        subselectors: [
+          {title: 'A.nova-e-link'},
+          {cit: 'DIV.nova-v-citation-item__context-body--clamp-none'}
+        ]
+      }
     }
-    scraper.scrape(selectors, '/profile/', id, res)
+    scraper.scrape(selectors, '/publication/', id, res)
   })
 
 }

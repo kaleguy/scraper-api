@@ -6,7 +6,11 @@
 
 A proxy to provide a basic JSON API to ResearchGate.
 
-Currently there are two endpoints implemented, one for informatio about a particular article, the other for information about an author. See the Swagger docs (below) for more info.
+Endpoints implemented:
+* Article info by title
+* Author info
+* List of articles by author
+* List of citations by article
 
 Example:
 ```
