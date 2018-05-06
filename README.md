@@ -4,9 +4,10 @@
 
 ## Synopsis
 
-A proxy to provide a basic JSON API to ResearchGate.
+A proxy to provide a basic JSON API to ResearchGate.  
 
 Endpoints implemented:
+
 * Article info by title
 * Author info
 * List of articles by author
@@ -82,6 +83,78 @@ Sample output for the above url:
 
  
 Implemented with Restify (version 7).
+
+## More About Selectors
+
+The following examples show how the selectors work with the above target url.
+
+The selector object takes keys with CSS selector values. For example:
+
+```
+pubdate: 'meta[property="citation_publication_date"]'
+```
+
+This will result in JSON with the same key, with the value being the text found at the target document at the specified location.
+
+If the CSS selector returns an 'A' element, the value returned will be an object, e.g. :
+
+```
+journal: '.publication-meta-journal A',
+```
+
+returns:
+
+```
+  "journal":{
+      "href":"journal/1467-9221_Political_Psychology",
+      "text":"Political Psychology"
+   },
+```
+
+If the selector value is an object, then an array of objects will be returned. For example: 
+
+```
+  authors: {
+    selector: '.publication-author-list__item',
+    subselectors: [
+      { name: '.nova-v-person-list-item__title A' },
+      { rating: '.nova-v-person-list-item__meta SPAN:first-child' },
+      { institution: '.nova-v-person-list-item__meta LI:nth-child(2) SPAN' }
+    ]
+  }  
+```
+
+returns:
+
+```
+   "authors":[
+      {
+         "name":{
+            "href":"https://www.researchgate.net/profile/Xiaowen_Xu4",
+            "text":"Xiaowen Xu"
+         },
+         "rating":"14.72",
+         "institution":"University of Toronto"
+      },
+      {
+         "name":{
+            "href":"https://www.researchgate.net/profile/Jordan_Peterson2",
+            "text":"Jordan B Peterson"
+         },
+         "rating":"39.79",
+         "institution":"University of Toronto"
+      }
+   ],
+```    
+
+## Multipage Targets
+
+Endpoints can be configured to scrape multiple pages at a given target site.
+
+Endpoints use the 'scaper' function with a path for the target. If the path is an array, the scraper will visit each path and return the merged results.
+
+See the rg.js file for examples.
+
 
 ## Installation
 

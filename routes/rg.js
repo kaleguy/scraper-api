@@ -52,7 +52,7 @@ module.exports = function (server) {
         ]
       }
     }
-    scraper.scrape(selectors, '/publication/', id, res)
+    scraper.scrape(res, selectors, '/publication/{id}', id)
   })
 
   /**
@@ -91,7 +91,7 @@ module.exports = function (server) {
       reads: 'DIV.section-about>DIV:nth-child(2) .nova-o-grid.nova-o-grid--gutter-xxl.nova-o-grid--order-normal.nova-o-grid--horizontal-align-left.nova-o-grid--vertical-align-top DIV:nth-child(2)>DIV',
       citations: 'DIV.section-about>DIV:nth-child(2) .nova-o-grid.nova-o-grid--gutter-xxl.nova-o-grid--order-normal.nova-o-grid--horizontal-align-left.nova-o-grid--vertical-align-top DIV:nth-child(3)>DIV'
     }
-    scraper.scrape(selectors, '/profile/', id, res)
+    scraper.scrape(res, selectors, '/profile/{id}', id)
   })
 
   /**
@@ -128,7 +128,11 @@ module.exports = function (server) {
         ]
       }
     }
-    scraper.scrape(selectors, '/profile/', id, res)
+    scraper.scrape(
+      res,
+      selectors,
+      ['/profile/{id}', '/profile/{id}/2', '/profile/{id}/3'],
+      id)
   })
 
   /**
@@ -166,7 +170,7 @@ module.exports = function (server) {
         ]
       }
     }
-    scraper.scrape(selectors, '/publication/', id, res)
+    scraper.scrape(res, selectors, '/publication/{id}', id)
   })
 
 }
