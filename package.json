@@ -14,6 +14,7 @@
     "restify": "^7.1.1",
     "restify-clients": "^2.0.2",
     "restify-cors-middleware": "^1.1.0",
+    "superagent": "^3.8.3",
     "swagger-jsdoc": "^1.9.2"
   },
   "devDependencies": {

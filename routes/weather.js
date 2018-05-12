@@ -1,14 +1,12 @@
-const restify = require('restify-clients');
-const nconf = require('nconf');
+const nconf = require('nconf')
+const request = require('superagent')
 
 nconf.argv()
   .env()
-  .file({ file: '.config.json' });
+  .file({ file: '.config.json' })
 
-const appId = nconf.get('weatherAppId');
-
+const appId = nconf.get('weatherAppId')
 module.exports = function (server) {
-
 
   /**
    * @swagger
@@ -93,19 +91,22 @@ module.exports = function (server) {
    *
    */
   server.get('/weather/:city', function (req, res, next) {
-    var city = req.params.city;
-    const host = 'api.openweathermap.org"; ///data/2.5/weather?q=';
+    let city = req.params.city;
+    const host = 'api.openweathermap.org'; ///data/2.5/weather?q=';
     const urlSuffix = '&units=imperial&appid=' + appId;
-
-    // Creates a JSON client
-    const client = restify.createJsonClient({
-      url: 'http://' + host
-    });
+    let url = 'http://' + host
     const p = '/data/2.5/weather?q=' + encodeURIComponent(city) + urlSuffix;
-    client.get(p, function(err, treq, tres, obj) {
-      if (err) { return res.send(err.message) }
-      res.send(obj);
-    });
+    url = url + p
+    request
+      .get(url)
+      .set('accept', 'json')
+      .end((err, xres) => {
+        if (err) {
+          return res.send(err.message)
+        }
+        res.json(xres.body)
+        // Calling the end function will send the request
+      });
 
   });
 
