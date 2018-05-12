@@ -18,8 +18,11 @@ Example:
 http://localhost:8888/rg/article?title=282790843_Differences_in_Media_Preference_Mediate_the_Link_Between_Personality_and_Political_Orientation
 ```
 
-The existing endpoint can be easily adapted to scrape a different site.
+The existing endpoints can be easily adapted to scrape a different site.
 
+Implemented with Restify (version 7).
+
+## Configuring Endpoints
 
 To scrape the page referenced above, the following selectors are configured in the endpoint:
 
@@ -80,10 +83,7 @@ Sample output for the above url:
    "url":"https://www.researchgate.net/publication/282790843_Differences_in_Media_Preference_Mediate_the_Link_Between_Personality_and_Political_Orientation"
 }
 ```
-
  
-Implemented with Restify (version 7).
-
 ## More About Selectors
 
 The following examples show how the selectors work with the above target url.
