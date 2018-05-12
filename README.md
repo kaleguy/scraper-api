@@ -245,6 +245,13 @@ Tape/Supertest tests:
 npm run test-agent
 ```
 
+## Run with Docker
+
+```
+docker build . -t rg
+docker run -p 8888:8888 rg  
+```
+
 ## Coverage
 
 Create coverage report with Istanbul, send to Coveralls to keep a record.
