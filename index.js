@@ -12,7 +12,7 @@ const options = {
       description: 'Endpoints for extracting JSON data from ResearchGate endpoints',
       version: '1.0.0' // Version (required)
     },
-    "tags": [
+    tags: [
       {
         "name": "Weather",
         "description": "Simple pass-through demo endpoint."
@@ -23,7 +23,7 @@ const options = {
       }
     ],
     basePath: '',
-    schemes: ['http']
+    schemes: ['http', 'https']
   },
   apis: [
     __dirname + '/routes/weather.js',
