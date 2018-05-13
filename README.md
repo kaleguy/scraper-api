@@ -4,7 +4,7 @@
 
 ## Synopsis
 
-A proxy to provide a basic JSON API to ResearchGate.  
+A proxy to provide a basic API to scrape JSON data from ResearchGate pages.  
 
 Endpoints implemented:
 
