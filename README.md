@@ -13,10 +13,15 @@ Endpoints implemented:
 * List of articles by author
 * List of citations by article
 
-Example:
+Example url:
 ```
 http://localhost:8888/rg/article?title=282790843_Differences_in_Media_Preference_Mediate_the_Link_Between_Personality_and_Political_Orientation
 ```
+
+Online version:
+
+[Swagger UI](http://scrape-rg-dev.us-east-1.elasticbeanstalk.com/public/swagger/index.html)
+
 
 The existing endpoints can be easily adapted to scrape a different site.
 
@@ -222,9 +227,8 @@ When running locally the Swagger UI will be reachable at http://localhost:8888/p
 
 Online version:
 
-[Swagger UI](http://tranquil-headland-86417.herokuapp.com/public/swagger/index.html)
+[Swagger UI](http://scrape-rg-dev.us-east-1.elasticbeanstalk.com/public/swagger/index.html)
 
-The hosted version of this project currently does not have a functional ResearchGate endpoint due to constraints on Heroku. However, as of this moment the api works correctly when run locally. The Swagger docs and Weather endpoint do work on the hosted version.
 
 ## Tests
 

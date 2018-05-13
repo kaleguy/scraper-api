@@ -4,3 +4,8 @@ node_modules/
 .config.json
 .idea/*
 coverage/
+
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml
