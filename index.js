@@ -102,7 +102,7 @@ server.use(corsMiddleware({
   origins: [
     'https://kaleguy.github.io',
     'https://travis-ci.org/',
-    'https://localhost:8080/'
+    'http://localhost:8080/'
   ]//,   // defaults to ['*']
 //  credentials: true,                 // defaults to false
  // headers: ['x-foo']                 // sets expose-headers
