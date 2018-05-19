@@ -22,6 +22,7 @@ Online version:
 
 [Swagger UI](http://scrape-rg-dev.us-east-1.elasticbeanstalk.com/public/swagger/index.html)
 
+The endpoints in the Swagger doc may not run as ResearchGate blocks some IP ranges assigned to AWS. The app should still be able to scrape when run locally.
 
 The existing endpoints can be easily adapted to scrape a different site.
 
