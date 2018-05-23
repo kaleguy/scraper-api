@@ -124,7 +124,10 @@ module.exports = function (server) {
       articles: {
         selector: 'DIV[itemtype="http://schema.org/ScholarlyArticle"]',
         subselectors: [
-          {title: 'A.nova-e-link'}
+          { title: 'A.nova-e-link' },
+          { abstract: 'DIV[itemprop="description"]' },
+          { date: 'LI.publication-item-meta-items__meta-data-item SPAN' },
+          { read: 'LI.nova-v-publication-item__metrics-item SPAN' }
         ]
       }
     }
@@ -166,7 +169,7 @@ module.exports = function (server) {
         selector: '.pub-citations-list LI.pub-citations-list__item',
         subselectors: [
           {title: 'A.nova-e-link'},
-          {cit: 'DIV.nova-v-citation-item__context-body--clamp-none'}
+          {cit: 'DIV.nova-v-citation-item__context-body--clamp-none'},
         ]
       }
     }
