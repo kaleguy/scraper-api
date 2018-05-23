@@ -117,7 +117,9 @@ returns:
    },
 ```
 
-If the selector value is an object, then an array of objects will be returned. For example: 
+If the selector value is an object, then a list of objects will be returned. For example the
+following will return an array of article objects (the publicaton-author-list__item selector selects for an article). 
+The subselectors determine the keys of the list object. 
 
 ```
   authors: {

@@ -127,14 +127,21 @@ module.exports = function (server) {
           { title: 'A.nova-e-link' },
           { abstract: 'DIV[itemprop="description"]' },
           { date: 'LI.publication-item-meta-items__meta-data-item SPAN' },
-          { read: 'LI.nova-v-publication-item__metrics-item SPAN' }
+          { read: 'LI.nova-v-publication-item__metrics-item SPAN' },
+          { authors: {
+            selector: 'UL.nova-v-publication-item__person-list LI',
+            subselectors: [
+              { author: 'A[itemprop="author"]' }
+            ]
+            }
+          }
         ]
       }
     }
     scraper.scrape(
       res,
       selectors,
-      ['/profile/{id}', '/profile/{id}/2', '/profile/{id}/3'],
+      ['/profile/{id}'], //'/profile/{id}/2', '/profile/{id}/3'],
       id)
   })
 
