@@ -169,7 +169,7 @@ See the rg.js file for examples.
 Note: if you want the weather demo endpoint to be functional,
 rename .config.example.json to .config.json, edit with your openWeather API key.
 
-To install and run:
+To install and run, install and start mongodb. Then:
 
 ```
 npm install
@@ -255,7 +255,7 @@ npm run test-agent
 ## Run with Docker
 
 ```
-docker build . -t rg
+docker build -t rg .
 docker run -p 8888:8888 rg  
 ```
 

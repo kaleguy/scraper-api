@@ -5,6 +5,13 @@ const corsMiddleware = require('restify-cors-middleware')
 const swaggerJSDoc = require('swagger-jsdoc')
 var exports = module.exports = {}
 
+const MongoClient = require('mongodb').MongoClient;
+const assert = require('assert');
+
+const url = process.env.MONGO_URL || 'mongodb://localhost:27017';
+let db = null;
+let cache = null;
+
 const options = {
   swaggerDefinition: {
     info: {
@@ -97,66 +104,83 @@ server = restify.createServer({
   log  : log,
 })
 
+MongoClient.connect(url, function(err, client) {
 
-server.use(corsMiddleware({
-  origins: [
-    'https://kaleguy.github.io',
-    'http://localhost:8080'
-  ]//,   // defaults to ['*']
-//  credentials: true,                 // defaults to false
- // headers: ['x-foo']                 // sets expose-headers
-}).actual)
-server.use(restify.plugins.bodyParser({ mapParams: false }))
-server.use(restify.plugins.queryParser())
-server.use(restify.plugins.gzipResponse())
-server.pre(restify.plugins.pre.sanitizePath())
+  assert.equal(null, err);
+  console.log("Connected successfully to server");
+  db = client.db('rg-cache');
+  cache = db.collection('documents');
+  // client.close();
 
-// This version of restify can't handle hyphens in url params... gross hack here to fix
-function encodeHyphens(req, res, next) {
+  server.use(corsMiddleware({
+    origins: [
+      'https://kaleguy.github.io',
+      'http://localhost:8080'
+    ]// defaults to ['*']
+    //  credentials: true,                 // defaults to false
+    // headers: ['x-foo']                 // sets expose-headers
+  }).actual)
+  server.use(restify.plugins.bodyParser({ mapParams: false }))
+  server.use(restify.plugins.queryParser())
+  server.use(restify.plugins.gzipResponse())
+  server.pre(restify.plugins.pre.sanitizePath())
+
+  // This version of restify can't handle hyphens in url params... gross hack here to fix
+  function encodeHyphens(req, res, next) {
     req.url = req.url.replace(/-/g, '__');
     return next();
-}
-// server.pre(encodeHyphens)
-
-/*jslint unparam:true*/
-// Default error handler. Personalize according to your needs.
-/* istanbul ignore next */
-server.on('uncaughtException', function (req, res, route, err) {
-  console.log('******* Begin Error *******')
-  console.log(route)
-  console.log('*******')
-  console.log(err.stack)
-  console.log('******* End Error *******')
-  if (!res.headersSent) {
-    return res.send(500, { ok : false })
   }
-  res.write("\n")
-  res.end()
-})
-/*jslint unparam:false*/
+  // server.pre(encodeHyphens)
 
-// server.on('after', restify.plugins.auditLogger({ log: log }))
-routes(server)
+  /*jslint unparam:true*/
+  // Default error handler. Personalize according to your needs.
+  /* istanbul ignore next */
+  server.on('uncaughtException', function (req, res, route, err) {
+    console.log('******* Begin Error *******')
+    console.log(route)
+    console.log('*******')
+    console.log(err.stack)
+    console.log('******* End Error *******')
+    if (!res.headersSent) {
+      return res.send(500, { ok : false })
+    }
+    res.write("\n")
+    res.end()
+  })
+  /*jslint unparam:false*/
 
-// serve swagger docs
-server.get('/public/swagger/*', restify.plugins.serveStatic({
-  directory: __dirname,
-  default: 'index.html'
-}))
+  // server.on('after', restify.plugins.auditLogger({ log: log }))
+  routes(server)
 
-// serve swagger spec
-server.get('/api-docs.json', function(req, res) {
-  res.setHeader('Content-Type', 'application/json')
-  res.send(swaggerSpec)
-})
+  // serve swagger docs
+  server.get('/public/swagger/*', restify.plugins.serveStatic({
+    directory: __dirname,
+    default: 'index.html'
+  }))
 
-console.log('Server started.')
-server.listen(process.env.PORT || 8888, function () {
-  log.info('%s listening at %s', server.name, server.url)
-})
+  // serve swagger spec
+  server.get('/api-docs.json', function(req, res) {
+    res.setHeader('Content-Type', 'application/json')
+    res.send(swaggerSpec)
+  })
 
-var app = server
-module.exports = app
-exports.close = server.close
+  console.log('Server started.')
+  server.listen(process.env.PORT || 8888, function () {
+    log.info('%s listening at %s', server.name, server.url)
+  })
+  const app = server
+
+  function checkCache(req, res, next) {
+    console.log(req)
+    next()
+  }
+  app.use(checkCache);
+
+  module.exports = app
+  exports.cache = cache
+  exports.close = server.close
+
+});
+
 
 

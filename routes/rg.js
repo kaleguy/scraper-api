@@ -1,4 +1,3 @@
-const scraper = require('../lib/scraper')('https://www.researchgate.net')
 
 const nconf = require('nconf')
 
@@ -7,6 +6,8 @@ nconf.argv()
   .file({ file: '.config.json' })
 
 module.exports = function (server) {
+
+  const scraper = require('../lib/scraper')('https://www.researchgate.net')
 
   /**
    * @swagger
@@ -91,7 +92,7 @@ module.exports = function (server) {
       reads: 'DIV.section-about>DIV:nth-child(2) .nova-o-grid.nova-o-grid--gutter-xxl.nova-o-grid--order-normal.nova-o-grid--horizontal-align-left.nova-o-grid--vertical-align-top DIV:nth-child(2)>DIV',
       citations: 'DIV.section-about>DIV:nth-child(2) .nova-o-grid.nova-o-grid--gutter-xxl.nova-o-grid--order-normal.nova-o-grid--horizontal-align-left.nova-o-grid--vertical-align-top DIV:nth-child(3)>DIV'
     }
-    scraper.scrape(res, selectors, '/profile/{id}', id)
+    scraper.scrape(res, selectors, '/profile/{id}', id, req.url)
   })
 
   /**
@@ -127,7 +128,7 @@ module.exports = function (server) {
           { title: 'A.nova-e-link' },
           { abstract: 'DIV[itemprop="description"]' },
           { date: 'LI.publication-item-meta-items__meta-data-item SPAN' },
-          { read: 'LI.nova-v-publication-item__metrics-item SPAN' },
+          { reads: 'LI.nova-v-publication-item__metrics-item SPAN' },
           { authors: {
             selector: 'UL.nova-v-publication-item__person-list LI',
             subselectors: [
