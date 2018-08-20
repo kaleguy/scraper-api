@@ -172,7 +172,18 @@ MongoClient.connect(url, function(err, client) {
 
   function checkCache(req, res, next) {
     console.log(req)
-    next()
+    const cb = (err, result) => {
+      if (result) {
+        delete result._id;
+        console.log(`Retrieving ${result.key} from cache.`)
+        res.json(result);
+      } else {
+        console.log(`Retrieving ${req.url}.`)
+        next();
+      }
+    }
+    cache.findOne( { key : req.url }, cb );
+    //next()
   }
   app.use(checkCache);
 
