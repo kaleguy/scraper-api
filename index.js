@@ -171,7 +171,6 @@ MongoClient.connect(url, function(err, client) {
   const app = server
 
   function checkCache(req, res, next) {
-    console.log(req)
     const cb = (err, result) => {
       if (result) {
         delete result._id;

@@ -53,7 +53,7 @@ module.exports = function (server) {
         ]
       }
     }
-    scraper.scrape(res, selectors, '/publication/{id}', id)
+    scraper.scrape(res, selectors, '/publication/{id}', id, req.url)
   })
 
   /**
@@ -143,7 +143,8 @@ module.exports = function (server) {
       res,
       selectors,
       ['/profile/{id}'], //'/profile/{id}/2', '/profile/{id}/3'],
-      id)
+      id,
+      req.url)
   })
 
   /**
@@ -181,7 +182,7 @@ module.exports = function (server) {
         ]
       }
     }
-    scraper.scrape(res, selectors, '/publication/{id}', id)
+    scraper.scrape(res, selectors, '/publication/{id}', id, req.url)
   })
 
 }
