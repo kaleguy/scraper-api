@@ -106,11 +106,17 @@ server = restify.createServer({
 
 MongoClient.connect(url, function(err, client) {
 
-  assert.equal(null, err);
-  console.log("Connected successfully to server");
-  db = client.db('rg-cache');
-  cache = db.collection('documents');
-  // client.close();
+  // assert.equal(null, err);
+  if (err) {
+    console.log('No database available.')
+    db = {}
+    cache = {}
+    cache.findOne = cache.insertOne = (o, cb) => { return cb() }
+  } else {
+    console.log('Connected successfully to server')
+    db = client.db('rg-cache')
+    cache = db.collection('documents');
+  }
 
   server.use(corsMiddleware({
     origins: [

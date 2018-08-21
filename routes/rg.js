@@ -127,6 +127,7 @@ module.exports = function (server) {
         subselectors: [
           { title: 'A.nova-e-link' },
           { abstract: 'DIV[itemprop="description"]' },
+          { type: 'A.nova-v-publication-item__type' },
           { date: 'LI.publication-item-meta-items__meta-data-item SPAN' },
           { reads: 'LI.nova-v-publication-item__metrics-item SPAN' },
           { authors: {
