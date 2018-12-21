@@ -108,7 +108,7 @@ MongoClient.connect(url, function(err, client) {
 
   // assert.equal(null, err);
   if (err) {
-    console.log('No database available.')
+    console.log('No database available, results will not be cached.')
     db = {}
     cache = {}
     cache.findOne = cache.insertOne = (o, cb) => { return cb() }

@@ -1,6 +1,6 @@
 {
   "name": "scraper-api",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "main": "index.js",
   "dependencies": {
     "bunyan": "^1.8.12",

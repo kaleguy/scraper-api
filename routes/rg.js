@@ -38,18 +38,33 @@ module.exports = function (server) {
     const selectors = {
       pubdate: 'meta[property="citation_publication_date"]',
       title: 'h1.nova-e-text--size-xxxl',
-      citations: '.ga-resources-citations span.publication-resource-link-amount',
-      references: '.ga-resources-references span.publication-resource-link-amount',
-      date: '.publication-meta-date',
-      reads: '.publication-meta-stats',
-      journal: '.publication-meta-journal A',
-      abstract: '.publication-abstract .nova-e-text--spacing-auto',
+      citations:
+        [
+          'DIV.nova-e-text.nova-e-text--size-m.nova-e-text--family-sans-serif.nova-e-text--spacing-none.nova-e-text--color-inherit.publication-resources-summary__see-all-count strong',
+          '.ga-resources-citations span.publication-resource-link-amount'
+        ],
+      references: [
+        'DIV.nova-o-pack__item:nth-child(2) DIV.nova-e-text.nova-e-text--size-m.nova-e-text--family-sans-serif.nova-e-text--spacing-none.nova-e-text--color-inherit.publication-resources-summary__see-all-count strong',
+        '.ga-resources-references span.publication-resource-link-amount'
+        ],
+      reads: [
+        'DIV.nova-e-text.nova-e-text--size-m.nova-e-text--family-sans-serif.nova-e-text--spacing-xxs.nova-e-text--color-grey-700:not(span) /with\\s(.*?)$/',
+        '.publication-meta-stats',
+      ],
+      journal:
+        [
+        'A.nova-e-link.nova-e-link--color-blue.nova-e-link--theme-bare',
+        '.publication-meta-journal A',
+        ],
+      abstract: [
+         '.publication-abstract .nova-e-text--spacing-auto',
+         'DIV.nova-e-text.nova-e-text--size-m.nova-e-text--family-sans-serif.nova-e-text--spacing-auto.nova-e-text--color-inherit'
+        ],
       authors: {
         selector: '.publication-author-list__item',
         subselectors: [
           { name: '.nova-v-person-list-item__title A' },
-          { rating: '.nova-v-person-list-item__meta SPAN:first-child' },
-          { institution: '.nova-v-person-list-item__meta LI:nth-child(2) SPAN' }
+          { institution: 'LI.nova-v-person-list-item__meta-item:last-child SPAN' }
         ]
       }
     }

@@ -18,40 +18,72 @@ Example url:
 http://localhost:8888/rg/article?title=282790843_Differences_in_Media_Preference_Mediate_the_Link_Between_Personality_and_Political_Orientation
 ```
 
-Online version:
-
-[Swagger UI](http://scrape-rg-dev.us-east-1.elasticbeanstalk.com/public/swagger/index.html)
-
-The endpoints in the Swagger doc may not run as ResearchGate blocks some IP ranges assigned to AWS. The app should still be able to scrape when run locally.
-
 The existing endpoints can be easily adapted to scrape a different site.
 
 Implemented with Restify (version 7).
+
+## Update for Version 1.1
+
+ResearchGate has made changes to their site that make scraping more of a challenge, so version 1.1 has a few changes:
+
+1 Author lists on the article page may be incomplete and require another cick to retrieve the full list. 
+  No fix for this currently. If you scrape a page like this, you'll need to add the additional authors manually.
+1 Some articles have different formatting than others. To deal with this, you can now add selectors (see below) in an 
+  array, the selector that returns a value will be used.
+1 Some items, for example number of reads no longer have any enclosing element and can't be selected by CSS alone. 
+  For this case, the feature has been added of being able to append a regular expression to the end of the selector.
+  See below for example.
+1 In some cases ResearchGate may not return a result unless you send a cookie. If this happens, access the site via 
+  browser and then retrieve the cookie from the Developer Console of your browser, and paste that value into the 
+  .set("Cookie", '') line in scraper.js      
+
 
 ## Configuring Endpoints
 
 To scrape the page referenced above, the following selectors are configured in the endpoint:
 
 ```
-const selectors = {
-  pubdate: 'meta[property="citation_publication_date"]',
-  title: 'h1.nova-e-text--size-xxxl',
-  cits: '.ga-resources-citations span.publication-resource-link-amount',
-  refs: '.ga-resources-references span.publication-resource-link-amount',
-  date: '.publication-meta-date',
-  reads: '.publication-meta-stats',
-  journal: '.publication-meta-journal A',
-  abstract: '.publication-abstract .nova-e-text--spacing-auto',
-  authors: {
-    selector: '.publication-author-list__item',
-    subselectors: [
-      { name: '.nova-v-person-list-item__title A' },
-      { rating: '.nova-v-person-list-item__meta SPAN:first-child' },
-      { institution: '.nova-v-person-list-item__meta LI:nth-child(2) SPAN' }
-    ]
-  }
-}
+    const selectors = {
+      pubdate: 'meta[property="citation_publication_date"]',
+      title: 'h1.nova-e-text--size-xxxl',
+      citations:
+        [
+          'DIV.nova-e-text.nova-e-text--size-m.nova-e-text--family-sans-serif.nova-e-text--spacing-none.nova-e-text--color-inherit.publication-resources-summary__see-all-count strong',
+          '.ga-resources-citations span.publication-resource-link-amount'
+        ],
+      references: [
+        'DIV.nova-o-pack__item:nth-child(2) DIV.nova-e-text.nova-e-text--size-m.nova-e-text--family-sans-serif.nova-e-text--spacing-none.nova-e-text--color-inherit.publication-resources-summary__see-all-count strong',
+        '.ga-resources-references span.publication-resource-link-amount'
+        ],
+      reads: [
+        'DIV.nova-e-text.nova-e-text--size-m.nova-e-text--family-sans-serif.nova-e-text--spacing-xxs.nova-e-text--color-grey-700:not(span) /with\\s(.*?)$/',
+        '.publication-meta-stats',
+      ],
+      journal:
+        [
+        'A.nova-e-link.nova-e-link--color-blue.nova-e-link--theme-bare',
+        '.publication-meta-journal A',
+        ],
+      abstract: [
+         '.publication-abstract .nova-e-text--spacing-auto',
+         'DIV.nova-e-text.nova-e-text--size-m.nova-e-text--family-sans-serif.nova-e-text--spacing-auto.nova-e-text--color-inherit'
+        ],
+      authors: {
+        selector: '.publication-author-list__item',
+        subselectors: [
+          { name: '.nova-v-person-list-item__title A' },
+          { institution: 'LI.nova-v-person-list-item__meta-item:last-child SPAN' }
+        ]
+      }
+    }
+
 ```
+
+Note that some selectors (e.g. 'abstract') are arrays. This is to deal with multiple page formats.
+
+Also note the regular expression at the end of the first "reads" selector. The value of this applied to the value of the 
+first selector will be returned.
+
 
 Sample output for the above url:
 
@@ -74,7 +106,6 @@ Sample output for the above url:
             "href":"https://www.researchgate.net/profile/Xiaowen_Xu4",
             "text":"Xiaowen Xu"
          },
-         "rating":"14.72",
          "institution":"University of Toronto"
       },
       {
@@ -82,7 +113,6 @@ Sample output for the above url:
             "href":"https://www.researchgate.net/profile/Jordan_Peterson2",
             "text":"Jordan B Peterson"
          },
-         "rating":"39.79",
          "institution":"University of Toronto"
       }
    ],
