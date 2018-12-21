@@ -206,6 +206,10 @@ npm install
 npm start
 ```
 
+## Caching
+
+If mongodb is running locally, the results of searches will get cached to Mongo.
+
 ## Swagger-JSDoc and Swagger-Test
 
 This project uses the swagger-jsdoc module, which allows for documenting endpoints inline with Swagger YAML:
@@ -257,10 +261,6 @@ The x-amples section in the comments above will be turned into a test by swagger
 Swagger Docs generated from inline Swagger comments, processed by Swagger-JSDocs. 
 
 When running locally the Swagger UI will be reachable at http://localhost:8888/public/swagger/index.html
-
-Online version:
-
-[Swagger UI](http://scrape-rg-dev.us-east-1.elasticbeanstalk.com/public/swagger/index.html)
 
 
 ## Tests
