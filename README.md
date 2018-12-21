@@ -26,14 +26,14 @@ Implemented with Restify (version 7).
 
 ResearchGate has made changes to their site that make scraping more of a challenge, so version 1.1 has a few changes:
 
-1 Author lists on the article page may be incomplete and require another cick to retrieve the full list. 
+1. Author lists on the article page may be incomplete and require another cick to retrieve the full list. 
   No fix for this currently. If you scrape a page like this, you'll need to add the additional authors manually.
-1 Some articles have different formatting than others. To deal with this, you can now add selectors (see below) in an 
+1. Some articles have different formatting than others. To deal with this, you can now add selectors (see below) in an 
   array, the selector that returns a value will be used.
-1 Some items, for example number of reads no longer have any enclosing element and can't be selected by CSS alone. 
+1. Some items, for example number of reads no longer have any enclosing element and can't be selected by CSS alone. 
   For this case, the feature has been added of being able to append a regular expression to the end of the selector.
   See below for example.
-1 In some cases ResearchGate may not return a result unless you send a cookie. If this happens, access the site via 
+1. In some cases ResearchGate may not return a result unless you send a cookie. If this happens, access the site via 
   browser and then retrieve the cookie from the Developer Console of your browser, and paste that value into the 
   .set("Cookie", '') line in scraper.js      
 
