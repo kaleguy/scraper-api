@@ -185,6 +185,14 @@ returns:
    ],
 ```    
 
+## XPath Selectors
+
+If a selector begins with '//' it will be assumed to be an XPath selector and not a CSS selector. Element names need to be namespaced with "x", for example:
+
+```
+'//x:th[contains(text(),\'Document type\')]/parent::*/x:td'
+```
+
 ## Multipage Targets
 
 Endpoints can be configured to scrape multiple pages at a given target site.

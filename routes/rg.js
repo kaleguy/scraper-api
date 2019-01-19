@@ -165,6 +165,53 @@ module.exports = function (server) {
 
   /**
    * @swagger
+   * /rg/journal:
+   *   get:
+   *     description: "Returns info for a given journal."
+   *     summary: "Get ResearchGate article list"
+   *     tags: [ResearchGate]
+   *     parameters:
+   *       - name: name
+   *         in: query
+   *         description: "The Journal name"
+   *         required: true
+   *         default: 0138-9130_Scientometrics
+   *         type: string
+   *         consumes:
+   *           - application/json
+   *           - application/text
+   *     produces:
+   *       - application/json
+   *     responses:
+   *       200:
+   *         headers:
+   *           content-type: "text/plain"
+   */
+  server.get('/rg/journal', function (req, res, next) {
+    const id = req.query.name
+    const selectors = {
+      publisher: 'DIV.journal-full-info__meta',
+      description: '.journal-full-info__description-title + p',
+      rgimpact: 'H2.nova-e-text--color-inherit b',
+      halflife: '//x:th[contains(text(),\'Cited half-life\')]/parent::*/x:td',
+      immediacy: '//x:th[contains(text(),\'Immediacy index\')]/parent::*/x:td',
+      eigenfactor: '//x:th[contains(text(),\'Eigenfactor\')]/parent::*/x:td',
+      influence: '//x:th[contains(text(),\'Article influence\')]/parent::*/x:td',
+      website: '//x:th[contains(text(),\'Website\')]/parent::*/x:td',
+      issn: '//x:th[contains(text(),\'ISSN\')]/parent::*/x:td',
+      material: '//x:th[contains(text(),\'Material type\')]/parent::*/x:td',
+      doctype: '//x:th[contains(text(),\'Document type\')]/parent::*/x:td',
+    }
+    scraper.scrape(
+      res,
+      selectors,
+      ['/journal/{id}'], //'/profile/{id}/2', '/profile/{id}/3'],
+      id,
+      req.url)
+  })
+
+  /**
+   * @swagger
    * /rg/citations:
    *   get:
    *     description: "Returns citation list for a given article."
